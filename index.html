@@ -7,542 +7,429 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Cinzel+Decorative:wght@400;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --parchment:       #fdf3dc;
-      --parchment-dark:  #f0deb4;
-      --parchment-deep:  #e8c87a;
-      --ink-brown:       #4a2511;
-      --ink-maroon:      #800000;
-      --gold:            #c8960c;
-      --gold-light:      #f0c040;
-      --gold-dark:       #8b6914;
-      --saffron:         #e86a17;
-      --lotus-pink:      #c94070;
-      --sky-blue:        #1a6fa0;
-      --cream:           #fffbf0;
-      --shadow-warm:     rgba(74, 37, 17, 0.18);
+      --parchment:      #fdf3dc;
+      --parchment-dark: #f0deb4;
+      --parchment-deep: #e8c87a;
+      --ink-brown:      #4a2511;
+      --ink-maroon:     #800000;
+      --gold:           #c8960c;
+      --gold-light:     #f0c040;
+      --gold-dark:      #8b6914;
+      --saffron:        #e86a17;
+      --cream:          #fffbf0;
     }
 
-    /* ── Parchment texture via CSS ── */
     body {
       min-height: 100vh;
       background-color: var(--parchment);
       background-image:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 28px,
-          rgba(200,150,12,0.07) 29px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 40px,
-          rgba(74,37,17,0.04) 41px
-        );
-      font-family: 'Poppins', sans-serif;
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
       color: var(--ink-brown);
       overflow-x: hidden;
-      position: relative;
     }
 
-    /* ── Decorative border frame ── */
     body::before {
       content: '';
-      position: fixed;
-      inset: 10px;
-      border: 3px double var(--gold);
-      border-radius: 6px;
-      pointer-events: none;
-      z-index: 100;
-      box-shadow: inset 0 0 30px rgba(200,150,12,0.08);
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
     }
     body::after {
       content: '';
-      position: fixed;
-      inset: 16px;
-      border: 1px solid rgba(200,150,12,0.4);
-      border-radius: 4px;
-      pointer-events: none;
-      z-index: 100;
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
     }
 
-    /* ── Corner ornaments ── */
     .corner {
-      position: fixed;
-      width: 52px;
-      height: 52px;
-      z-index: 101;
-      pointer-events: none;
-      opacity: 0.75;
+      position: fixed; width: 52px; height: 52px;
+      z-index: 201; pointer-events: none; opacity: 0.8;
     }
     .corner svg { width: 100%; height: 100%; }
-    .corner--tl { top: 4px;  left: 4px; }
-    .corner--tr { top: 4px;  right: 4px;  transform: scaleX(-1); }
-    .corner--bl { bottom: 4px; left: 4px;  transform: scaleY(-1); }
-    .corner--br { bottom: 4px; right: 4px;  transform: scale(-1); }
+    .corner--tl { top: 4px;    left: 4px; }
+    .corner--tr { top: 4px;    right: 4px;    transform: scaleX(-1); }
+    .corner--bl { bottom: 4px; left: 4px;     transform: scaleY(-1); }
+    .corner--br { bottom: 4px; right: 4px;    transform: scale(-1); }
 
-    /* ── Page wrapper ── */
     .page {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 40px 24px 60px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
+      max-width: 680px; margin: 0 auto;
+      padding: 36px 20px 80px;
+      display: flex; flex-direction: column; align-items: center;
     }
 
-    /* ── Header band ── */
-    .header-band {
-      width: 100%;
-      text-align: center;
-      padding: 18px 0 12px;
-      position: relative;
+    /* ══ HEADER ══ */
+    .header-band { width: 100%; text-align: center; padding: 14px 0 10px; }
+    .presenter {
+      font-family: 'Laila', serif; font-size: clamp(11px, 2.2vw, 14px); font-weight: 500;
+      letter-spacing: 0.2em; color: var(--gold-dark); text-transform: uppercase;
     }
-    .header-band .presenter {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(10px, 2vw, 13px);
-      letter-spacing: 0.25em;
-      color: var(--gold-dark);
-      text-transform: uppercase;
-    }
-    .header-band .divider-om {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      margin: 10px 0 6px;
+    .divider-om {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin: 10px 0 6px;
     }
     .divider-line {
-      flex: 1;
-      max-width: 160px;
-      height: 1px;
+      flex: 1; max-width: 140px; height: 1px;
       background: linear-gradient(to right, transparent, var(--gold), transparent);
     }
     .om-symbol {
-      font-size: 22px;
-      color: var(--saffron);
-      line-height: 1;
+      font-family: 'Inknut Antiqua', serif; font-size: 24px; color: var(--saffron);
       animation: pulse-om 3s ease-in-out infinite;
     }
     @keyframes pulse-om {
       0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: 0.7; transform: scale(1.08); }
+      50%      { opacity: 0.65; transform: scale(1.1); }
     }
 
-    /* ── Logo strip ── */
-    .logo-strip {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      margin: 4px 0 14px;
-    }
+    /* ══ LOGO ══ */
+    .logo-strip { margin: 4px 0 12px; }
     .logo-strip img {
-      height: 90px;
-      width: auto;
-      filter: drop-shadow(0 3px 8px rgba(74,37,17,0.25));
+      height: 88px; width: auto;
+      filter: drop-shadow(0 3px 10px rgba(74,37,17,0.28));
       animation: float-logo 4s ease-in-out infinite;
     }
     @keyframes float-logo {
       0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
+      50%      { transform: translateY(-7px); }
     }
 
-    /* ── Main title ── */
+    /* ══ TITLE ══ */
     .main-title {
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(32px, 8vw, 64px);
-      color: var(--ink-maroon);
-      text-align: center;
-      line-height: 1.15;
-      letter-spacing: 0.01em;
-      text-shadow: 2px 2px 0 rgba(200,150,12,0.3), 4px 4px 12px rgba(74,37,17,0.15);
-      margin-bottom: 4px;
-      animation: title-in 1s ease both;
+      font-family: 'Inknut Antiqua', serif; font-weight: 800;
+      font-size: clamp(28px, 7.5vw, 58px); color: var(--ink-maroon);
+      text-align: center; line-height: 1.18;
+      text-shadow: 2px 2px 0 rgba(200,150,12,0.28), 4px 5px 14px rgba(74,37,17,0.14);
+      margin-bottom: 4px; animation: title-in 0.9s ease both;
     }
     @keyframes title-in {
-      from { opacity: 0; transform: translateY(-16px); }
+      from { opacity: 0; transform: translateY(-14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     .romanized {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: clamp(11px, 2.2vw, 15px);
-      color: var(--gold-dark);
-      letter-spacing: 0.18em;
-      text-align: center;
-      margin-bottom: 6px;
+      font-family: 'Laila', serif; font-size: clamp(11px, 2vw, 14px); font-weight: 500;
+      color: var(--gold-dark); letter-spacing: 0.22em; text-align: center; margin-bottom: 8px;
     }
 
-    /* ── Tagline ── */
+    /* ══ TAGLINE ══ */
     .tagline-band {
       background: linear-gradient(135deg, var(--ink-maroon) 0%, #5a0000 100%);
       color: var(--gold-light);
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(13px, 2.5vw, 17px);
-      padding: 9px 32px;
-      border-radius: 2px;
-      text-align: center;
-      letter-spacing: 0.06em;
-      margin: 10px 0 28px;
-      position: relative;
+      font-family: 'Inknut Antiqua', serif; font-size: clamp(12px, 2.4vw, 16px);
+      padding: 9px 36px; border-radius: 2px; text-align: center;
+      letter-spacing: 0.04em; margin: 10px 0 22px; position: relative;
       box-shadow: 0 4px 16px rgba(128,0,0,0.3);
     }
-    .tagline-band::before,
-    .tagline-band::after {
-      content: '✦';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gold-light);
-      opacity: 0.6;
-      font-size: 10px;
-    }
-    .tagline-band::before { left: 12px; }
-    .tagline-band::after  { right: 12px; }
+    .tagline-band::before { content: '✦'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 10px; }
+    .tagline-band::after  { content: '✦'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 10px; }
 
-    /* ── Video / visual container ── */
+    /* ══ VISUAL ══ */
     .visual-wrap {
-      position: relative;
-      width: clamp(240px, 55vw, 380px);
-      margin: 0 auto 32px;
+      position: relative; width: clamp(200px, 50vw, 300px);
+      margin: 0 auto 24px;
     }
-    .visual-frame {
-      width: 100%;
-      padding-top: 100%;
-      position: relative;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 5px solid var(--gold);
-      box-shadow:
-        0 0 0 8px var(--parchment),
-        0 0 0 11px var(--gold-dark),
-        0 12px 40px rgba(74,37,17,0.35);
-      background: radial-gradient(circle at 40% 35%, #fff9e8, #f5d98a);
-    }
-    .visual-frame video,
-    .visual-frame img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    /* placeholder until video is added */
-    .visual-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 40% 35%, #fff9e8, #f5d98a);
-      gap: 8px;
-    }
-    .visual-placeholder .krishna-icon {
-      font-size: 72px;
-      animation: krishna-dance 1.8s ease-in-out infinite;
-      line-height: 1;
-    }
-    @keyframes krishna-dance {
-      0%,100% { transform: rotate(-5deg) translateY(0); }
-      25%      { transform: rotate(5deg) translateY(-8px); }
-      50%      { transform: rotate(-3deg) translateY(-4px); }
-      75%      { transform: rotate(4deg) translateY(-10px); }
-    }
-    .visual-placeholder .placeholder-text {
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: 12px;
-      color: var(--gold-dark);
-      text-align: center;
-      padding: 0 16px;
-      opacity: 0.75;
-    }
-    /* Glow ring around visual */
     .visual-glow {
-      position: absolute;
-      inset: -18px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(240,192,64,0.22) 0%, transparent 70%);
-      animation: glow-pulse 3s ease-in-out infinite;
-      pointer-events: none;
-      z-index: -1;
+      position: absolute; inset: -20px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(240,192,64,0.25) 0%, transparent 70%);
+      animation: glow-pulse 3s ease-in-out infinite; pointer-events: none; z-index: -1;
     }
     @keyframes glow-pulse {
       0%,100% { transform: scale(1); opacity: 1; }
-      50%      { transform: scale(1.06); opacity: 0.6; }
+      50%      { transform: scale(1.06); opacity: 0.5; }
     }
-    /* Floating lotus petals */
     .petal {
-      position: absolute;
-      font-size: 20px;
+      position: absolute; font-size: 18px; opacity: 0.5;
       animation: orbit linear infinite;
-      pointer-events: none;
-      opacity: 0.55;
+      pointer-events: none; top: 50%; left: 50%;
     }
     @keyframes orbit {
       from { transform: rotate(var(--start)) translateX(var(--r)) rotate(calc(-1 * var(--start))); }
       to   { transform: rotate(calc(var(--start) + 360deg)) translateX(var(--r)) rotate(calc(-1 * (var(--start) + 360deg))); }
     }
+    .visual-frame {
+      width: 100%; padding-top: 100%; position: relative; border-radius: 50%; overflow: hidden;
+      border: 5px solid var(--gold);
+      box-shadow: 0 0 0 8px var(--parchment), 0 0 0 11px var(--gold-dark), 0 12px 40px rgba(74,37,17,0.35);
+      background: radial-gradient(circle at 40% 35%, #fff9e8, #f5d98a);
+    }
+    .visual-frame video, .visual-frame img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+    }
+    .visual-placeholder {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+    }
+    .krishna-icon { font-size: 64px; animation: krishna-dance 1.8s ease-in-out infinite; }
+    @keyframes krishna-dance {
+      0%,100% { transform: rotate(-5deg) translateY(0); }
+      25%      { transform: rotate(5deg) translateY(-8px); }
+      75%      { transform: rotate(4deg) translateY(-10px); }
+    }
+    .placeholder-text {
+      font-family: 'Laila', serif; font-size: 11px; font-weight: 500;
+      color: var(--gold-dark); text-align: center; padding: 0 14px; line-height: 1.5;
+    }
 
-    /* ── CTA buttons ── */
+    /* ══ CTA ══ */
     .cta-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto 36px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 14px; width: 100%; max-width: 400px; margin: 0 auto 26px;
     }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      border-radius: 3px;
-      transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
-      position: relative;
-      overflow: hidden;
-      width: 100%;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      border: none; cursor: pointer; text-decoration: none;
+      border-radius: 3px; width: 100%;
+      transition: transform 0.18s, box-shadow 0.18s;
+      position: relative; overflow: hidden;
     }
     .btn::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0);
-      transition: background 0.2s;
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0); transition: background 0.2s;
     }
-    .btn:hover::after { background: rgba(255,255,255,0.12); }
+    .btn:hover::after { background: rgba(255,255,255,0.13); }
     .btn:active { transform: scale(0.97) !important; }
 
-    /* Primary — Start Playing */
     .btn-primary {
-      background: linear-gradient(135deg, #c8960c 0%, #e0a820 40%, #a06808 100%);
+      background: linear-gradient(135deg, #c8960c 0%, #e0a820 45%, #a06808 100%);
       color: var(--cream);
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(17px, 4vw, 22px);
-      padding: 18px 36px;
-      box-shadow:
-        0 6px 0 var(--gold-dark),
-        0 8px 24px rgba(200,150,12,0.5);
+      font-family: 'Inknut Antiqua', serif; font-size: clamp(14px, 3.5vw, 19px); font-weight: 600;
+      padding: 17px 32px;
+      box-shadow: 0 6px 0 var(--gold-dark), 0 8px 22px rgba(200,150,12,0.45);
       border-top: 1px solid rgba(255,255,255,0.4);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-      letter-spacing: 0.04em;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.25);
       animation: btn-appear 0.7s 0.3s ease both;
     }
     @keyframes btn-appear {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 9px 0 var(--gold-dark), 0 14px 32px rgba(200,150,12,0.55);
-    }
-    .btn-icon {
-      font-size: 1.2em;
-      animation: spin-icon 6s linear infinite;
-    }
-    @keyframes spin-icon {
-      0%,90%  { transform: rotate(0); }
-      95%     { transform: rotate(20deg); }
-      100%    { transform: rotate(0); }
-    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 9px 0 var(--gold-dark), 0 14px 28px rgba(200,150,12,0.5); }
 
-    /* Secondary — Parents Dashboard */
     .btn-secondary {
       background: linear-gradient(135deg, var(--ink-maroon) 0%, #600000 100%);
       color: var(--parchment-dark);
-      font-family: 'Poppins', sans-serif;
-      font-size: clamp(13px, 3vw, 16px);
-      font-weight: 500;
-      padding: 14px 28px;
-      box-shadow: 0 4px 0 #3a0000, 0 6px 20px rgba(128,0,0,0.35);
-      border-top: 1px solid rgba(255,255,255,0.15);
-      letter-spacing: 0.03em;
+      font-family: 'Laila', serif; font-size: clamp(13px, 2.8vw, 15px); font-weight: 600;
+      padding: 13px 24px;
+      box-shadow: 0 4px 0 #3a0000, 0 6px 18px rgba(128,0,0,0.3);
+      border-top: 1px solid rgba(255,255,255,0.12);
       animation: btn-appear 0.7s 0.5s ease both;
     }
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 0 #3a0000, 0 10px 28px rgba(128,0,0,0.4);
-    }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #3a0000, 0 10px 24px rgba(128,0,0,0.38); }
 
-    /* ── Features strip ── */
+    /* ══ FEATURES ══ */
     .features {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-      width: 100%;
+      display: flex; gap: 10px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 30px; width: 100%;
     }
     .feature-pill {
-      background: rgba(200,150,12,0.12);
-      border: 1px solid rgba(200,150,12,0.4);
+      background: rgba(200,150,12,0.11);
+      border: 1px solid rgba(200,150,12,0.38);
       color: var(--ink-brown);
-      font-size: clamp(11px, 2.5vw, 13px);
-      padding: 7px 16px;
-      border-radius: 100px;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      animation: pill-in 0.6s ease both;
-    }
-    .feature-pill:nth-child(2) { animation-delay: 0.1s; }
-    .feature-pill:nth-child(3) { animation-delay: 0.2s; }
-    .feature-pill:nth-child(4) { animation-delay: 0.3s; }
-    @keyframes pill-in {
-      from { opacity: 0; transform: scale(0.9); }
-      to   { opacity: 1; transform: scale(1); }
+      font-family: 'Laila', serif; font-size: clamp(11px, 2.2vw, 13px); font-weight: 500;
+      padding: 6px 14px; border-radius: 100px;
+      display: flex; align-items: center; gap: 5px;
     }
 
-    /* ── Levels preview ── */
-    .levels-heading {
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(18px, 4vw, 24px);
-      color: var(--ink-maroon);
-      text-align: center;
-      margin-bottom: 16px;
-      position: relative;
+    /* ══════════════════════════════════════════
+       CANDY CRUSH MAP
+    ══════════════════════════════════════════ */
+    .map-heading {
+      font-family: 'Inknut Antiqua', serif; font-weight: 700;
+      font-size: clamp(16px, 3.8vw, 21px); color: var(--ink-maroon);
+      text-align: center; margin-bottom: 4px;
     }
-    .levels-heading::after {
-      content: '';
-      display: block;
-      margin: 6px auto 0;
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    .map-sub {
+      font-family: 'Laila', serif; font-size: 13px; font-weight: 500;
+      color: var(--gold-dark); text-align: center; margin-bottom: 18px;
     }
-    .levels-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      width: 100%;
-      max-width: 640px;
-      margin: 0 auto 40px;
-    }
-    .level-card {
-      background: var(--cream);
-      border: 1.5px solid var(--parchment-deep);
-      border-radius: 4px;
-      padding: 18px 12px;
-      text-align: center;
-      text-decoration: none;
-      color: var(--ink-brown);
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 3px 0 rgba(200,150,12,0.25);
-    }
-    .level-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 7px 0 rgba(200,150,12,0.3), 0 12px 24px rgba(74,37,17,0.12);
-      border-color: var(--gold);
-    }
-    .level-icon  { font-size: 32px; line-height: 1; }
-    .level-num   { font-family: 'Cinzel Decorative', serif; font-size: 10px; color: var(--gold-dark); letter-spacing: 0.12em; }
-    .level-title { font-family: 'Tiro Devanagari Hindi', serif; font-size: clamp(13px, 3vw, 16px); color: var(--ink-maroon); }
-    .level-sub   { font-size: 11px; color: var(--gold-dark); font-weight: 500; }
 
-    /* ── Mantra scroll ── */
+    .map-container {
+      width: 100%; max-width: 400px;
+      position: relative; padding-bottom: 16px;
+    }
+
+    /* SVG path behind everything */
+    .map-svg {
+      position: absolute; top: 0; left: 0;
+      width: 100%; pointer-events: none; z-index: 0; overflow: visible;
+    }
+
+    /* Each horizontal row */
+    .map-row {
+      display: flex; align-items: center; justify-content: space-around;
+      position: relative; z-index: 1;
+      padding: 0 16px; min-height: 90px;
+    }
+
+    /* ── Node base ── */
+    .level-node {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative; flex-shrink: 0;
+      text-decoration: none; color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    /* UNLOCKED */
+    .level-node.unlocked {
+      background: radial-gradient(circle at 36% 30%, #ffe566 0%, #c8960c 80%);
+      border: 3px solid #a07010;
+      box-shadow: 0 5px 0 #7a5008, 0 8px 18px rgba(200,150,12,0.4);
+      cursor: pointer;
+    }
+    .level-node.unlocked:hover { transform: translateY(-4px) scale(1.06); }
+    .level-node.unlocked .node-num {
+      font-family: 'Inknut Antiqua', serif; font-size: 18px; font-weight: 800;
+      color: var(--ink-maroon); text-shadow: 0 1px 0 rgba(255,255,255,0.5); line-height: 1;
+    }
+    .level-node.unlocked .node-label {
+      font-family: 'Laila', serif; font-size: 7px; font-weight: 600;
+      color: #5a2000; letter-spacing: 0.04em; line-height: 1; margin-top: 1px;
+    }
+
+    /* CURRENT — glowing saffron */
+    .level-node.current {
+      background: radial-gradient(circle at 36% 30%, #ffaa60 0%, #e86a17 80%);
+      border: 3px solid #c04000;
+      box-shadow: 0 5px 0 #903000, 0 8px 24px rgba(232,106,23,0.55);
+      animation: current-pulse 2s ease-in-out infinite;
+      cursor: pointer; z-index: 5;
+    }
+    @keyframes current-pulse {
+      0%,100% { box-shadow: 0 5px 0 #903000, 0 8px 24px rgba(232,106,23,0.5), 0 0 0 0 rgba(232,106,23,0.45); }
+      50%      { box-shadow: 0 5px 0 #903000, 0 8px 30px rgba(232,106,23,0.7), 0 0 0 14px rgba(232,106,23,0); }
+    }
+    .level-node.current .node-num {
+      font-family: 'Inknut Antiqua', serif; font-size: 18px; font-weight: 800;
+      color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); line-height: 1;
+    }
+    .level-node.current .node-label {
+      font-family: 'Laila', serif; font-size: 7px; font-weight: 600;
+      color: #fff8f0; letter-spacing: 0.04em; line-height: 1; margin-top: 1px;
+    }
+    .current-badge {
+      position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+      background: var(--ink-maroon); color: var(--gold-light);
+      font-family: 'Laila', serif; font-size: 8px; font-weight: 700;
+      padding: 2px 10px; border-radius: 100px; white-space: nowrap;
+      letter-spacing: 0.06em; box-shadow: 0 2px 6px rgba(128,0,0,0.4);
+    }
+
+    /* LOCKED */
+    .level-node.locked {
+      background: radial-gradient(circle at 36% 30%, #e2d8b8 0%, #b8a878 80%);
+      border: 3px solid #9a8860;
+      box-shadow: 0 4px 0 #7a6840, 0 6px 12px rgba(74,37,17,0.18);
+      cursor: not-allowed; opacity: 0.8;
+    }
+    .level-node.locked .lock-icon { font-size: 20px; line-height: 1; }
+    .level-node.locked .node-num {
+      font-family: 'Inknut Antiqua', serif; font-size: 10px; font-weight: 700;
+      color: #7a6840; line-height: 1; margin-top: 1px;
+    }
+
+    /* MILESTONE (every 10 levels) — larger, green when unlocked */
+    .level-node.milestone { width: 74px; height: 74px; }
+    .level-node.milestone.unlocked, .level-node.milestone.current {
+      background: radial-gradient(circle at 36% 30%, #b8f080 0%, #3a7a18 80%);
+      border-color: #2a5a0c;
+      box-shadow: 0 5px 0 #1a4008, 0 8px 20px rgba(58,122,24,0.4);
+    }
+    .level-node.milestone.unlocked .node-num,
+    .level-node.milestone.current  .node-num { font-size: 12px; color: #fff; }
+    .milestone-icon { font-size: 26px; line-height: 1; }
+
+    /* Milestone chapter banner */
+    .chapter-banner {
+      text-align: center; margin: 2px 0; position: relative; z-index: 2;
+    }
+    .chapter-banner span {
+      display: inline-block;
+      background: var(--ink-maroon); color: var(--gold-light);
+      font-family: 'Inknut Antiqua', serif; font-size: 10px; font-weight: 600;
+      padding: 3px 20px; border-radius: 100px; letter-spacing: 0.1em;
+    }
+
+    /* ── Locked toast ── */
+    .lock-toast {
+      position: fixed; bottom: 80px;
+      left: 50%; transform: translateX(-50%) translateY(16px);
+      background: var(--ink-maroon); color: var(--gold-light);
+      font-family: 'Laila', serif; font-size: 14px; font-weight: 600;
+      padding: 12px 28px; border-radius: 3px;
+      box-shadow: 0 6px 20px rgba(128,0,0,0.4);
+      z-index: 300; opacity: 0; transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none; white-space: nowrap;
+    }
+    .lock-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ══ MANTRA ══ */
     .mantra-scroll {
-      width: 100%;
-      max-width: 540px;
-      background: var(--ink-maroon);
-      border-radius: 3px;
-      padding: 16px 24px;
-      text-align: center;
-      margin-bottom: 36px;
-      box-shadow: 0 4px 20px rgba(128,0,0,0.25);
-      position: relative;
-      overflow: hidden;
+      width: 100%; max-width: 460px;
+      background: var(--ink-maroon); border-radius: 3px;
+      padding: 15px 22px; text-align: center; margin: 28px 0 30px;
+      box-shadow: 0 4px 18px rgba(128,0,0,0.25); position: relative; overflow: hidden;
     }
     .mantra-scroll::before {
-      content: '';
-      position: absolute;
-      inset: 4px;
-      border: 1px solid rgba(240,192,64,0.3);
-      border-radius: 2px;
-      pointer-events: none;
+      content: ''; position: absolute; inset: 4px;
+      border: 1px solid rgba(240,192,64,0.28); border-radius: 2px; pointer-events: none;
     }
     .mantra-text {
-      font-family: 'Tiro Devanagari Hindi', serif;
-      font-size: clamp(14px, 3vw, 18px);
-      color: var(--gold-light);
-      line-height: 1.7;
-      letter-spacing: 0.05em;
+      font-family: 'Inknut Antiqua', serif;
+      font-size: clamp(13px, 2.8vw, 17px); color: var(--gold-light);
+      line-height: 1.7; letter-spacing: 0.04em;
     }
     .mantra-source {
-      font-size: 11px;
-      color: rgba(240,192,64,0.55);
-      margin-top: 6px;
-      font-style: italic;
+      font-family: 'Laila', serif; font-size: 11px; font-weight: 500;
+      color: rgba(240,192,64,0.5); margin-top: 5px;
     }
 
-    /* ── Footer ── */
+    /* ══ FOOTER ══ */
     footer {
-      text-align: center;
-      padding: 20px 0 10px;
-      border-top: 1px solid rgba(200,150,12,0.3);
-      width: 100%;
+      text-align: center; padding: 18px 0 8px;
+      border-top: 1px solid rgba(200,150,12,0.28); width: 100%;
     }
-    .footer-logo { font-size: 18px; margin-bottom: 4px; }
+    .footer-logo { font-size: 18px; margin-bottom: 3px; }
     .footer-copy {
-      font-size: 12px;
-      color: var(--gold-dark);
-      letter-spacing: 0.08em;
-      font-family: 'Cinzel Decorative', serif;
+      font-family: 'Laila', serif; font-size: 12px; font-weight: 600;
+      color: var(--gold-dark); letter-spacing: 0.1em;
     }
     .footer-tagline {
-      font-size: 11px;
-      color: rgba(74,37,17,0.5);
-      margin-top: 3px;
-      font-family: 'Tiro Devanagari Hindi', serif;
+      font-family: 'Inknut Antiqua', serif; font-size: 10px;
+      color: rgba(74,37,17,0.45); margin-top: 3px;
     }
 
-    /* ── Sparkle particles ── */
+    /* ══ SPARKLES ══ */
     .sparkle {
-      position: fixed;
-      pointer-events: none;
-      z-index: 0;
-      font-size: 14px;
-      opacity: 0;
+      position: fixed; pointer-events: none; z-index: 400;
+      font-size: 14px; opacity: 0;
       animation: sparkle-float linear forwards;
     }
     @keyframes sparkle-float {
       0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
-      20%  { opacity: 0.7; }
+      20%  { opacity: 0.75; }
       80%  { opacity: 0.4; }
-      100% { opacity: 0; transform: translateY(-120px) rotate(360deg); }
+      100% { opacity: 0; transform: translateY(-110px) rotate(360deg); }
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 520px) {
-      body::before, body::after { inset: 6px; }
-      .corner { width: 36px; height: 36px; }
-      .page { padding: 28px 16px 48px; }
-      .levels-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-      .level-card { padding: 12px 6px; }
-      .btn-primary { padding: 15px 20px; }
-      .btn-secondary { padding: 12px 20px; }
-      .mantra-scroll { padding: 14px 16px; }
+    @media (max-width: 480px) {
+      body::before, body::after { inset: 5px; }
+      .corner { width: 34px; height: 34px; }
+      .page { padding: 24px 14px 70px; }
+      .level-node { width: 54px; height: 54px; }
+      .level-node.milestone { width: 62px; height: 62px; }
+      .level-node.current .node-num,
+      .level-node.unlocked .node-num { font-size: 15px; }
     }
   </style>
 </head>
-
 <body>
 
   <!-- Corner ornaments -->
@@ -559,11 +446,13 @@
   <div class="corner corner--bl"></div>
   <div class="corner corner--br"></div>
 
+  <div class="lock-toast" id="lockToast">🔒 पूर्वस्तरं समाप्नुत — Complete Previous Level First!</div>
+
   <div class="page">
 
-    <!-- ══ HEADER ══ -->
+    <!-- HEADER -->
     <header class="header-band">
-      <p class="presenter">Team Trayee Presents</p>
+      <p class="presenter">Team Trayee — तृयी — Presents</p>
       <div class="divider-om">
         <div class="divider-line"></div>
         <span class="om-symbol">ॐ</span>
@@ -571,135 +460,329 @@
       </div>
     </header>
 
-    <!-- ══ LOGO + TITLE ══ -->
+    <!-- LOGO -->
     <div class="logo-strip">
-      <img src="./assets/logo.png"
-           alt="Team Trayee Logo"
-           onerror="this.style.display='none'" />
+      <img src="./assets/logo.png" alt="Team Trayee" onerror="this.style.display='none'" />
     </div>
 
+    <!-- TITLE -->
     <h1 class="main-title">संस्कृत-बालबोधिनी</h1>
     <p class="romanized">Samskrita · Balabodhini</p>
 
     <div class="tagline-band">
-      विद्या ददाति विनयं — ज्ञान से विनम्रता आती है
+      विद्या ददाति विनयम् — Knowledge Bestows Humility
     </div>
 
-    <!-- ══ VISUAL (VIDEO / IMAGE) ══ -->
+    <!-- VISUAL -->
     <div class="visual-wrap">
       <div class="visual-glow"></div>
-
-      <!-- Orbiting lotus petals -->
-      <span class="petal" style="--start:0deg;   --r:130px; animation-duration:12s;">🪷</span>
-      <span class="petal" style="--start:90deg;  --r:138px; animation-duration:14s;">✨</span>
-      <span class="petal" style="--start:180deg; --r:125px; animation-duration:11s;">🪷</span>
-      <span class="petal" style="--start:270deg; --r:132px; animation-duration:13s;">✨</span>
-
+      <span class="petal" style="--start:0deg;   --r:110px; animation-duration:12s;">🪷</span>
+      <span class="petal" style="--start:90deg;  --r:116px; animation-duration:14s;">✨</span>
+      <span class="petal" style="--start:180deg; --r:108px; animation-duration:11s;">🪷</span>
+      <span class="petal" style="--start:270deg; --r:113px; animation-duration:13s;">✨</span>
       <div class="visual-frame">
         <!--
-          ┌─────────────────────────────────────────────────┐
-          │  Replace the <div class="visual-placeholder">   │
-          │  below with your actual <video> or <img> tag:   │
-          │                                                 │
-          │  <video autoplay loop muted playsinline          │
-          │    src="./balabodhini/assets/images/krishna.mp4">│
-          │  </video>                                        │
-          │                                                 │
-          │  OR for a static image:                         │
-          │  <img src="./balabodhini/assets/images/krishna.png"│
-          │       alt="Baby Krishna" />                     │
-          └─────────────────────────────────────────────────┘
+          Replace placeholder with:
+          <video autoplay loop muted playsinline src="./balabodhini/assets/images/krishna.mp4"></video>
+          OR: <img src="./balabodhini/assets/images/krishna.png" alt="बालकृष्णः" />
         -->
         <div class="visual-placeholder">
           <span class="krishna-icon">🦚</span>
-          <span class="placeholder-text">यहाँ बालकृष्ण का<br>3D वीडियो आएगा</span>
+          <span class="placeholder-text">बालकृष्णस्य 3D चलचित्रम्<br>अत्र स्थास्यति</span>
         </div>
       </div>
     </div>
 
-    <!-- ══ CALL TO ACTION ══ -->
+    <!-- CTA -->
     <div class="cta-section">
       <a href="./balabodhini/level1.html" class="btn btn-primary">
-        <span class="btn-icon">🎮</span>
+        <span>🎮</span>
         <span>क्रीडामः — Start Playing!</span>
       </a>
       <a href="#" class="btn btn-secondary">
-        <span>👨‍👩‍👧 पोषक-ವೇದಿಕೆ — Parents Dashboard</span>
+        <span>👨‍👩‍👧</span>
+        <span>पोषक-वेदिका — Parents Dashboard</span>
       </a>
     </div>
 
-    <!-- ══ FEATURES ══ -->
+    <!-- FEATURES -->
     <div class="features">
       <div class="feature-pill">🔤 वर्णमाला · Alphabets</div>
-      <div class="feature-pill">🔢 संख्या · Numbers</div>
-      <div class="feature-pill">🎵 श्लोक · Shlokas</div>
+      <div class="feature-pill">🔢 संख्याः · Numbers</div>
+      <div class="feature-pill">🎵 श्लोकाः · Shlokas</div>
       <div class="feature-pill">🎮 क्रीडा · Games</div>
     </div>
 
-    <!-- ══ LEVELS ══ -->
-    <h2 class="levels-heading">स्तर-चयन करें · Choose Your Level</h2>
-    <div class="levels-grid">
-      <a href="./balabodhini/level1.html" class="level-card">
-        <span class="level-icon">🌱</span>
-        <span class="level-num">LEVEL · 1</span>
-        <span class="level-title">प्रारम्भ</span>
-        <span class="level-sub">Beginner</span>
-      </a>
-      <a href="./balabodhini/level2.html" class="level-card">
-        <span class="level-icon">🌺</span>
-        <span class="level-num">LEVEL · 2</span>
-        <span class="level-title">मध्यम</span>
-        <span class="level-sub">Intermediate</span>
-      </a>
-      <a href="./balabodhini/level3.html" class="level-card">
-        <span class="level-icon">🏆</span>
-        <span class="level-num">LEVEL · 3</span>
-        <span class="level-title">उन्नत</span>
-        <span class="level-sub">Advanced</span>
-      </a>
-    </div>
+    <!-- MAP HEADING -->
+    <h2 class="map-heading">अध्ययन-पथः · Learning Path</h2>
+    <p class="map-sub">२०० स्तराः · 200 Levels — Complete one to unlock the next!</p>
 
-    <!-- ══ MANTRA SCROLL ══ -->
+    <!-- CANDY CRUSH MAP (built by JS) -->
+    <div class="map-container" id="mapContainer"></div>
+
+    <!-- MANTRA -->
     <div class="mantra-scroll">
-      <div class="mantra-text">
-        तद्धि तपस्तद्धि तपः
-      </div>
-      <div class="mantra-source">— Team Trayee Motto</div>
+      <div class="mantra-text">तद्धि तपस्तद्धि तपः</div>
+      <div class="mantra-source">— Team Trayee वाक्यम् · Motto</div>
     </div>
 
-    <!-- ══ FOOTER ══ -->
+    <!-- FOOTER -->
     <footer>
       <div class="footer-logo">🪷</div>
-      <p class="footer-copy">© 2026 Team Trayee</p>
-      <p class="footer-tagline">सर्वे भवन्तु सुखिनः · May all beings be happy</p>
+      <p class="footer-copy">© २०२६ Team Trayee</p>
+      <p class="footer-tagline">सर्वे भवन्तु सुखिनः · May All Beings Be Happy</p>
     </footer>
 
   </div><!-- /page -->
 
   <script>
-    // Sparkle on click / tap
-    document.addEventListener('click', e => {
-      const symbols = ['✦','✧','◈','⊹','✺','❋','⋆'];
-      for (let i = 0; i < 6; i++) {
-        const s = document.createElement('span');
-        s.className = 'sparkle';
-        s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-        s.style.left = (e.clientX + (Math.random() - 0.5) * 40) + 'px';
-        s.style.top  = (e.clientY + (Math.random() - 0.5) * 40) + 'px';
-        s.style.color = ['#c8960c','#e86a17','#800000','#f0c040'][i % 4];
-        s.style.animationDuration = (0.8 + Math.random() * 0.8) + 's';
-        s.style.animationDelay   = (i * 0.06) + 's';
-        s.style.fontSize = (10 + Math.random() * 10) + 'px';
-        document.body.appendChild(s);
-        s.addEventListener('animationend', () => s.remove());
+  /* ─── CONFIG ─── */
+  const TOTAL_LEVELS   = 200;
+  const NODES_PER_ROW  = 3;    // nodes per zig-zag segment
+  const VISIBLE_LEVELS = 24;   // how many levels to render in the map
+
+  const MILESTONES = {
+    10:  { icon:'🌸', title:'वर्णमाला · Alphabet'   },
+    20:  { icon:'📖', title:'शब्दाः · Words'         },
+    30:  { icon:'✏️',  title:'वाक्यम् · Sentences'   },
+    40:  { icon:'🔢', title:'गणनम् · Counting'       },
+    50:  { icon:'🏅', title:'अर्धशतम् · Half Century'},
+    60:  { icon:'📿', title:'श्लोकः · Shloka'        },
+    70:  { icon:'🦚', title:'कथाः · Stories'         },
+    80:  { icon:'🌙', title:'नक्षत्राः · Night Sky'  },
+    90:  { icon:'🌞', title:'सूर्यगीतम् · Sun Songs' },
+    100: { icon:'🏆', title:'शतस्तरः · Century!'     },
+    110: { icon:'🎵', title:'संगीतम् · Music'        },
+    120: { icon:'🌿', title:'प्रकृतिः · Nature'      },
+    130: { icon:'⭐', title:'नक्षत्राः · Stars'      },
+    140: { icon:'📚', title:'ग्रन्थाः · Books'       },
+    150: { icon:'🎭', title:'नाटकम् · Drama'         },
+    160: { icon:'🔬', title:'विज्ञानम् · Science'    },
+    170: { icon:'🎨', title:'कलाः · Arts'           },
+    180: { icon:'🌍', title:'भूगोलः · Geography'    },
+    190: { icon:'🧘', title:'योगः · Yoga'            },
+    200: { icon:'👑', title:'गुरुः · Master!'        },
+  };
+
+  /* ─── STATE ─── */
+  const unlockedUpTo = Math.max(1, Math.min(
+    parseInt(localStorage.getItem('sb_unlocked') || '1', 10),
+    TOTAL_LEVELS
+  ));
+
+  /* ─── BUILD MAP HTML ─── */
+  const container = document.getElementById('mapContainer');
+  const show = Math.min(VISIBLE_LEVELS, TOTAL_LEVELS);
+
+  // Group levels into rows
+  const rows = [];
+  for (let s = 1; s <= show; s += NODES_PER_ROW) {
+    rows.push(Array.from({length: Math.min(NODES_PER_ROW, show - s + 1)}, (_, i) => s + i));
+  }
+
+  let html = '';
+
+  rows.forEach((rowLevels, ri) => {
+    // Chapter banner BEFORE milestone row
+    const mLvl = rowLevels.find(l => MILESTONES[l]);
+    if (mLvl) {
+      html += `<div class="chapter-banner"><span>✦ ${MILESTONES[mLvl].title} ✦</span></div>`;
+    }
+
+    // Alternate direction: even rows L→R, odd rows R→L (visual zig-zag)
+    const displayLevels = ri % 2 === 1 ? [...rowLevels].reverse() : rowLevels;
+
+    html += `<div class="map-row" data-row="${ri}">`;
+
+    displayLevels.forEach(lvl => {
+      const isMilestone = !!MILESTONES[lvl];
+      const isCurrent   = lvl === unlockedUpTo;
+      const isUnlocked  = lvl < unlockedUpTo;
+      const isLocked    = !isCurrent && !isUnlocked;
+
+      let cls = 'level-node ';
+      if      (isCurrent)  cls += 'current';
+      else if (isUnlocked) cls += 'unlocked';
+      else                 cls += 'locked';
+      if (isMilestone)     cls += ' milestone';
+
+      let inner = '';
+      if (isCurrent) {
+        inner += `<span class="current-badge">▶ खेलुः · Play</span>`;
+        if (isMilestone) inner += `<span class="milestone-icon">${MILESTONES[lvl].icon}</span>`;
+        inner += `<span class="node-num">${lvl}</span>`;
+        inner += `<span class="node-label">स्तरः</span>`;
+      } else if (isUnlocked) {
+        if (isMilestone) {
+          inner += `<span class="milestone-icon">${MILESTONES[lvl].icon}</span>`;
+          inner += `<span class="node-num" style="font-size:11px">${lvl}</span>`;
+        } else {
+          inner += `<span class="node-num">${lvl}</span>`;
+          inner += `<span class="node-label">स्तरः</span>`;
+        }
+      } else {
+        // locked
+        inner += `<span class="lock-icon">🔒</span>`;
+        inner += `<span class="node-num">${lvl}</span>`;
+      }
+
+      if (!isLocked) {
+        html += `<a href="./balabodhini/level${lvl}.html" class="${cls}" data-level="${lvl}">${inner}</a>`;
+      } else {
+        html += `<div class="${cls}" data-level="${lvl}" role="button" tabindex="0">${inner}</div>`;
       }
     });
 
-    // Inject corner SVG into other corners
-    const tl = document.querySelector('.corner--tl').innerHTML;
-    document.querySelector('.corner--tr').innerHTML = tl;
-    document.querySelector('.corner--bl').innerHTML = tl;
-    document.querySelector('.corner--br').innerHTML = tl;
+    html += '</div>';
+  });
+
+  if (TOTAL_LEVELS > show) {
+    html += `<div style="text-align:center;margin:10px 0 0;font-family:'Laila',serif;font-size:12px;font-weight:500;color:var(--gold-dark);opacity:0.7;">
+      ✦ ${TOTAL_LEVELS - show} अधिकस्तराः · ${TOTAL_LEVELS - show} more levels await ✦
+    </div>`;
+  }
+
+  container.innerHTML = html;
+
+  /* ─── DRAW SVG PATH ─── */
+  function drawPath() {
+    const old = container.querySelector('.map-svg');
+    if (old) old.remove();
+
+    const nodes = Array.from(container.querySelectorAll('.level-node'));
+    if (nodes.length < 2) return;
+
+    const cRect = container.getBoundingClientRect();
+    const W = container.offsetWidth;
+    const H = container.scrollHeight || container.offsetHeight;
+
+    const pts = nodes.map(n => {
+      const r = n.getBoundingClientRect();
+      return {
+        x: r.left - cRect.left + r.width / 2,
+        y: r.top  - cRect.top  + r.height / 2,
+        unlocked: n.classList.contains('unlocked') || n.classList.contains('current'),
+      };
+    });
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'map-svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('width', W);
+    svg.setAttribute('height', H);
+    svg.style.height = H + 'px';
+
+    // Build smooth cubic bezier path
+    function buildD(pointArr) {
+      let d = `M ${pointArr[0].x.toFixed(1)} ${pointArr[0].y.toFixed(1)}`;
+      for (let i = 1; i < pointArr.length; i++) {
+        const p0 = pointArr[i - 1], p1 = pointArr[i];
+        const my = ((p0.y + p1.y) / 2).toFixed(1);
+        d += ` C ${p0.x.toFixed(1)} ${my}, ${p1.x.toFixed(1)} ${my}, ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+      }
+      return d;
+    }
+
+    const fullD = buildD(pts);
+
+    // Drop shadow
+    const shadow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    shadow.setAttribute('d', fullD);
+    shadow.setAttribute('fill', 'none');
+    shadow.setAttribute('stroke', '#6a4008');
+    shadow.setAttribute('stroke-width', '16');
+    shadow.setAttribute('stroke-linecap', 'round');
+    shadow.setAttribute('stroke-linejoin', 'round');
+    shadow.setAttribute('opacity', '0.25');
+    svg.appendChild(shadow);
+
+    // Locked (grey dashed) full path
+    const pathBase = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    pathBase.setAttribute('d', fullD);
+    pathBase.setAttribute('fill', 'none');
+    pathBase.setAttribute('stroke', '#c8b880');
+    pathBase.setAttribute('stroke-width', '11');
+    pathBase.setAttribute('stroke-linecap', 'round');
+    pathBase.setAttribute('stroke-linejoin', 'round');
+    pathBase.setAttribute('stroke-dasharray', '16 9');
+    svg.appendChild(pathBase);
+
+    // Unlocked gold overlay
+    const lastUnlockedIdx = pts.reduce((acc, p, i) => (p.unlocked ? i : acc), -1);
+    if (lastUnlockedIdx > 0) {
+      const unlockedPts = pts.slice(0, lastUnlockedIdx + 1);
+      const du = buildD(unlockedPts);
+
+      const pathU = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pathU.setAttribute('d', du);
+      pathU.setAttribute('fill', 'none');
+      pathU.setAttribute('stroke', '#e0a820');
+      pathU.setAttribute('stroke-width', '11');
+      pathU.setAttribute('stroke-linecap', 'round');
+      pathU.setAttribute('stroke-linejoin', 'round');
+      svg.appendChild(pathU);
+
+      // Sheen
+      const sheen = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      sheen.setAttribute('d', du);
+      sheen.setAttribute('fill', 'none');
+      sheen.setAttribute('stroke', 'rgba(255,245,160,0.55)');
+      sheen.setAttribute('stroke-width', '3');
+      sheen.setAttribute('stroke-linecap', 'round');
+      svg.appendChild(sheen);
+    }
+
+    container.style.position = 'relative';
+    container.insertBefore(svg, container.firstChild);
+  }
+
+  requestAnimationFrame(() => setTimeout(drawPath, 100));
+  window.addEventListener('resize', () => setTimeout(drawPath, 80));
+
+  /* ─── LOCKED TOAST ─── */
+  const toast = document.getElementById('lockToast');
+  let toastTimer;
+  container.addEventListener('click', e => {
+    const node = e.target.closest('.level-node.locked');
+    if (!node) return;
+    clearTimeout(toastTimer);
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+  });
+
+  /* ─── SPARKLES ─── */
+  document.addEventListener('click', e => {
+    if (e.target.closest('.level-node.locked')) return;
+    const syms = ['✦','✧','◈','⊹','✺','❋','⋆'];
+    for (let i = 0; i < 7; i++) {
+      const s = document.createElement('span');
+      s.className = 'sparkle';
+      s.textContent = syms[Math.floor(Math.random() * syms.length)];
+      s.style.left = (e.clientX + (Math.random() - 0.5) * 44) + 'px';
+      s.style.top  = (e.clientY + (Math.random() - 0.5) * 44) + 'px';
+      s.style.color = ['#c8960c','#e86a17','#800000','#f0c040'][i % 4];
+      s.style.animationDuration = (0.7 + Math.random() * 0.9) + 's';
+      s.style.animationDelay = (i * 0.055) + 's';
+      s.style.fontSize = (10 + Math.random() * 10) + 'px';
+      document.body.appendChild(s);
+      s.addEventListener('animationend', () => s.remove());
+    }
+  });
+
+  /* ─── CORNER CLONE ─── */
+  const tlSVG = document.querySelector('.corner--tl').innerHTML;
+  ['corner--tr','corner--bl','corner--br'].forEach(c =>
+    document.querySelector('.' + c).innerHTML = tlSVG
+  );
+
+  /* ─── DEV HELPER ───
+     Open browser console and type:
+       completeLevel(5)   → unlocks through level 5 and reloads
+  ─── */
+  window.completeLevel = n => {
+    localStorage.setItem('sb_unlocked', n);
+    location.reload();
+  };
   </script>
 </body>
-</htतपः
+</html>
