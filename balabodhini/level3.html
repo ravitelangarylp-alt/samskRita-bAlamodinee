@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 3 – अव्यय-प्रश्नपदानि · Indeclinables & Questions | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --parchment:      #fdf3dc;
+      --parchment-dark: #f0deb4;
+      --ink-brown:      #4a2511;
+      --ink-maroon:     #800000;
+      --gold:           #c8960c;
+      --gold-light:     #f0c040;
+      --gold-dark:      #8b6914;
+      --saffron:        #e86a17;
+      --cream:          #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 780px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+    }
+    .header-band { text-align: center; margin-bottom: 15px; }
+    .presenter {
+      font-family: 'Laila', serif; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .divider-om {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin: 10px 0 6px;
+    }
+    .divider-line {
+      flex: 1; max-width: 100px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .om-symbol {
+      font-family: 'Inknut Antiqua', serif; font-size: 24px; color: var(--saffron);
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 20px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .sentence-box {
+      background: #f9e4b7; border: 3px dashed #b85e0c;
+      border-radius: 20px; padding: 20px; font-size: 1.6em;
+      line-height: 2.4; text-align: left; margin: 20px 0;
+      color: #4a2511;
+    }
+    .blank {
+      display: inline-block; min-width: 100px;
+      background: white; border: 2px solid #8d6e63;
+      border-radius: 10px; padding: 4px 12px;
+      cursor: pointer; font-weight: bold; color: #d84315;
+      margin: 0 4px; transition: 0.2s;
+    }
+    .blank.filled { background: #c8e6c9; border-color: #2e7d32; color: #1b5e20; }
+    .blank:hover { background: #ffe0b2; }
+    .popup {
+      display: none; position: fixed;
+      background: white; border: 3px solid var(--saffron);
+      border-radius: 20px; padding: 12px;
+      z-index: 100; box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      flex-wrap: wrap; gap: 8px; justify-content: center;
+      max-width: 280px;
+    }
+    .opt-btn {
+      padding: 6px 14px; font-size: 1.1em;
+      border: none; border-radius: 15px;
+      background: #ffcc80; cursor: pointer; font-weight: bold;
+    }
+    .opt-btn:hover { background: #ffb74d; }
+    .controls { margin: 15px 0; }
+    .btn {
+      padding: 12px 25px; font-size: 1.1em;
+      border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .check-btn { background: #00695c; color: white; }
+    .next-btn { background: #1565c0; color: white; }
+    .restart-btn { background: var(--ink-maroon); color: white; }
+    .back-btn { background: var(--gold); color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .score { font-size: 1.5em; color: var(--saffron); font-weight: bold; }
+    .full-translation {
+      background: #e8f5e9; border-left: 5px solid #2e7d32;
+      padding: 15px; margin-top: 15px; border-radius: 8px;
+      font-family: 'Inknut Antiqua', serif; font-size: 1.4em; text-align: left;
+    }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 20px; padding: 12px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="gameApp"></div>
+<script>
+(function() {
+  // 50 questions on indeclinables and question words
+  const questions = [
+    { kannada:"ನಾನು ________ (ಇಂದು) ವಿದ್ಯಾಲಯಕ್ಕೆ ಹೋಗುತ್ತೇನೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अद्य", options:["अद्य","श्वः","ह्यः","परश्वः"] } ], fullSanskrit:"अहम् अद्य विद्यालयम् गच्छामि।" },
+    { kannada:"ಅವನು ________ (ನಾಳೆ) ಪುಸ್ತಕವನ್ನು ತರುತ್ತಾನೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"श्वः", options:["श्वः","अद्य","ह्यः","परश्वः"] } ], fullSanskrit:"सः श्वः पुस्तकम् आनयति।" },
+    { kannada:"ಹಕ್ಕಿಯು ________ (ಮೇಲೆ) ಹಾರುತ್ತಿದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"उपरि", options:["उपरि","अधः","अन्तः","बहिः"] } ], fullSanskrit:"खगः उपरि उड्डयते।" },
+    { kannada:"ಬಾಲಕನು ________ (ಕೆಳಗೆ) ಇಳಿಯುತ್ತಾನೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अधः", options:["अधः","उपरि","अन्तः","बहिः"] } ], fullSanskrit:"बालकः अधः अवतरति।" },
+    { kannada:"ಬೆಕ್ಕು ________ (ಒಳಗೆ) ಇದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अन्तः", options:["अन्तः","बहिः","उपरि","अधः"] } ], fullSanskrit:"मार्जारः अन्तः अस्ति।" },
+    { kannada:"ನಾಯಿ ________ (ಹೊರಗೆ) ನಿಂತಿದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"बहिः", options:["बहिः","अन्तः","उपरि","अधः"] } ], fullSanskrit:"कुक्कुरः बहिः तिष्ठति।" },
+    { kannada:"________ (ಎಲ್ಲಿ) ನಿನ್ನ ಪುಸ್ತಕ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुत्र", options:["कुत्र","यत्र","तत्र","अत्र"] } ], fullSanskrit:"कुत्र तव पुस्तकम्?" },
+    { kannada:"________ (ಎಲ್ಲಿ) ದೇವಸ್ಥಾನವಿದೆಯೋ ಅಲ್ಲಿ ಜನರು ಹೋಗುತ್ತಾರೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"यत्र", options:["यत्र","कुत्र","तत्र","अत्र"] } ], fullSanskrit:"यत्र देवालयः अस्ति तत्र जनाः गच्छन्ति।" },
+    { kannada:"________ (ಅಲ್ಲಿ) ನನ್ನ ಮನೆ ಇದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"तत्र", options:["तत्र","कुत्र","यत्र","अत्र"] } ], fullSanskrit:"तत्र मम गृहम् अस्ति।" },
+    { kannada:"________ (ಯಾರು) ಬಂದಿದ್ದಾರೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कः", options:["कः","का","किम्","के"] } ], fullSanskrit:"कः आगच्छति?" },
+    { kannada:"________ (ಯಾವಳು) ಹಾಡುತ್ತಿದ್ದಾಳೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"का", options:["का","कः","किम्","काः"] } ], fullSanskrit:"का गायति?" },
+    { kannada:"________ (ಏನು) ನಿನ್ನ ಹೆಸರು?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"किम्", options:["किम्","कः","का","कानि"] } ], fullSanskrit:"किम् तव नाम?" },
+    { kannada:"________ (ಎಷ್ಟು) ಮಕ್ಕಳು ಇದ್ದಾರೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कति", options:["कति","कः","का","किम्"] } ], fullSanskrit:"कति बालकाः सन्ति?" },
+    { kannada:"________ (ಹೇಗೆ) ನೀನು ಬಂದೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कथम्", options:["कथम्","कदा","कुतः","किमर्थम्"] } ], fullSanskrit:"कथम् त्वम् आगच्छसि?" },
+    { kannada:"________ (ಯಾವಾಗ) ನೀನು ಊಟ ಮಾಡುತ್ತೀಯ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कदा", options:["कदा","कथम्","कुतः","किमर्थम्"] } ], fullSanskrit:"कदा त्वम् भोजनम् करोषि?" },
+    { kannada:"________ (ಎಲ್ಲಿಂದ) ನೀನು ಬರುತ್ತೀಯ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुतः", options:["कुतः","कदा","कथम्","किमर्थम्"] } ], fullSanskrit:"कुतः त्वम् आगच्छसि?" },
+    { kannada:"________ (ಏಕೆ) ನೀನು ಅಳುತ್ತೀಯ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"किमर्थम्", options:["किमर्थम्","कथम्","कदा","कुतः"] } ], fullSanskrit:"किमर्थम् त्वम् रोदिषि?" },
+    { kannada:"ಅವನು ________ (ಇಂದು) ಬರುವುದಿಲ್ಲ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अद्य", options:["अद्य","श्वः","ह्यः","परश्वः"] } ], fullSanskrit:"सः अद्य न आगच्छति।" },
+    { kannada:"ನಾವು ________ (ನಾಳೆ) ಕ್ರೀಡಿಸುತ್ತೇವೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"श्वः", options:["श्वः","अद्य","ह्यः","परश्वः"] } ], fullSanskrit:"वयम् श्वः क्रीडामः।" },
+    { kannada:"ಪುಸ್ತಕವು ________ (ಮೇಜಿನ ಮೇಲೆ) ಇದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"उपरि", options:["उपरि","अधः","अन्तः","बहिः"] } ], fullSanskrit:"पुस्तकम् उपरि अस्ति।" },
+    { kannada:"ಹಾವು ________ (ಕೆಳಗೆ) ಹರಿಯುತ್ತದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अधः", options:["अधः","उपरि","अन्तः","बहिः"] } ], fullSanskrit:"सर्पः अधः सर्पति।" },
+    { kannada:"ಧನವು ________ (ಪೆಟ್ಟಿಗೆಯೊಳಗೆ) ಇದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अन्तः", options:["अन्तः","बहिः","उपरि","अधः"] } ], fullSanskrit:"धनम् अन्तः अस्ति।" },
+    { kannada:"ಮಕ್ಕಳು ________ (ಹೊರಗೆ) ಆಡುತ್ತಿದ್ದಾರೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"बहिः", options:["बहिः","अन्तः","उपरि","अधः"] } ], fullSanskrit:"बालाः बहिः क्रीडन्ति।" },
+    { kannada:"________ (ಎಲ್ಲಿ) ನಿನ್ನ ಶಾಲೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुत्र", options:["कुत्र","यत्र","तत्र","अत्र"] } ], fullSanskrit:"कुत्र तव विद्यालयः?" },
+    { kannada:"________ (ಎಲ್ಲಿ) ಹೂವುಗಳಿವೆಯೋ ಅಲ್ಲಿ ದುಂಬಿಗಳು ಬರುತ್ತವೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"यत्र", options:["यत्र","कुत्र","तत्र","अत्र"] } ], fullSanskrit:"यत्र पुष्पाणि सन्ति तत्र भ्रमराः आगच्छन्ति।" },
+    { kannada:"________ (ಅಲ್ಲಿ) ನಮ್ಮ ಊರು.", blanks:[ { role:"ಅವ್ಯಯ", correct:"तत्र", options:["तत्र","कुत्र","यत्र","अत्र"] } ], fullSanskrit:"तत्र अस्माकम् ग्रामः।" },
+    { kannada:"________ (ಯಾರು) ನಿನ್ನ ತಂದೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कः", options:["कः","का","किम्","के"] } ], fullSanskrit:"कः तव पिता?" },
+    { kannada:"________ (ಯಾವಳು) ನಿನ್ನ ತಾಯಿ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"का", options:["का","कः","किम्","काः"] } ], fullSanskrit:"का तव माता?" },
+    { kannada:"________ (ಏನು) ಇದು?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"किम्", options:["किम्","कः","का","कानि"] } ], fullSanskrit:"किम् इदम्?" },
+    { kannada:"________ (ಎಷ್ಟು) ಹಣ್ಣುಗಳಿವೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कति", options:["कति","कः","का","किम्"] } ], fullSanskrit:"कति फलानि सन्ति?" },
+    { kannada:"________ (ಹೇಗೆ) ಇದು ಸಾಧ್ಯ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कथम्", options:["कथम्","कदा","कुतः","किमर्थम्"] } ], fullSanskrit:"कथम् इदम् शक्यम्?" },
+    { kannada:"________ (ಯಾವಾಗ) ಮಳೆ ಬರುತ್ತದೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कदा", options:["कदा","कथम्","कुतः","किमर्थम्"] } ], fullSanskrit:"कदा वर्षा भवति?" },
+    { kannada:"________ (ಎಲ್ಲಿಂದ) ಗಾಳಿ ಬೀಸುತ್ತಿದೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुतः", options:["कुतः","कदा","कथम्","किमर्थम्"] } ], fullSanskrit:"कुतः वायुः वहति?" },
+    { kannada:"________ (ಏಕೆ) ಸೂರ್ಯನು ಬಿಸಿಲು ಕೊಡುತ್ತಾನೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"किमर्थम्", options:["किमर्थम्","कथम्","कदा","कुतः"] } ], fullSanskrit:"किमर्थम् सूर्यः तापम् यच्छति?" },
+    { kannada:"ನಾನು ________ (ನಿನ್ನೆ) ಅಲ್ಲಿಗೆ ಹೋಗಿದ್ದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"ह्यः", options:["ह्यः","अद्य","श्वः","परश्वः"] } ], fullSanskrit:"अहम् ह्यः तत्र अगच्छम्।" },
+    { kannada:"ಅವಳು ________ (ನಿನ್ನೆ) ಬಂದಿದ್ದಳು.", blanks:[ { role:"ಅವ್ಯಯ", correct:"ह्यः", options:["ह्यः","अद्य","श्वः","परश्वः"] } ], fullSanskrit:"सा ह्यः आगतवती।" },
+    { kannada:"ನಾವು ________ (ಮೇಲೆ) ನೋಡುತ್ತೇವೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"उपरि", options:["उपरि","अधः","अन्तः","बहिः"] } ], fullSanskrit:"वयम् उपरि पश्यामः।" },
+    { kannada:"ಗುಹೆಯು ________ (ಕೆಳಗೆ) ಇದೆ.", blanks:[ { role:"ಅವ್ಯಯ", correct:"अधः", options:["अधः","उपरि","अन्तः","बहिः"] } ], fullSanskrit:"गुहा अधः अस्ति।" },
+    { kannada:"________ (ಒಳಗೆ) ಯಾರಿದ್ದಾರೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"अन्तः", options:["अन्तः","बहिः","उपरि","अधः"] } ], fullSanskrit:"अन्तः कः अस्ति?" },
+    { kannada:"________ (ಹೊರಗೆ) ಹೋಗು.", blanks:[ { role:"ಅವ್ಯಯ", correct:"बहिः", options:["बहिः","अन्तः","उपरि","अधः"] } ], fullSanskrit:"बहिः गच्छ।" },
+    { kannada:"________ (ಎಲ್ಲಿ) ನೀನು ವಾಸಿಸುತ್ತೀಯ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुत्र", options:["कुत्र","यत्र","तत्र","अत्र"] } ], fullSanskrit:"कुत्र त्वम् वससि?" },
+    { kannada:"________ (ಎಲ್ಲಿ) ಜನರಿದ್ದಾರೋ ಅಲ್ಲಿ ಸಂತೋಷ.", blanks:[ { role:"अव्यय", correct:"यत्र", options:["यत्र","कुत्र","तत्र","अत्र"] } ], fullSanskrit:"यत्र जनाः सन्ति तत्र सन्तोषः।" },
+    { kannada:"________ (ಅಲ್ಲಿ) ದೇವರು.", blanks:[ { role:"अव्यय", correct:"तत्र", options:["तत्र","कुत्र","यत्र","अत्र"] } ], fullSanskrit:"तत्र ईश्वरः।" },
+    { kannada:"________ (ಯಾರು) ಹೇಳಿದರು?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कः", options:["कः","का","किम्","के"] } ], fullSanskrit:"कः अवदत्?" },
+    { kannada:"________ (ಯಾವಳು) ವಿಜ್ಞಾನಿ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"का", options:["का","कः","किम्","काः"] } ], fullSanskrit:"का वैज्ञानिकी?" },
+    { kannada:"________ (ಏನು) ಬೇಕು?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"किम्", options:["किम्","कः","का","कानि"] } ], fullSanskrit:"किम् इच्छसि?" },
+    { kannada:"________ (ಎಷ್ಟು) ಜನರು?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कति", options:["कति","कः","का","किम्"] } ], fullSanskrit:"कति नराः?" },
+    { kannada:"________ (ಹೇಗೆ) ನೀನು ಇದನ್ನು ಮಾಡಿದೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कथम्", options:["कथम्","कदा","कुतः","किमर्थम्"] } ], fullSanskrit:"कथम् त्वम् इदम् अकरोः?" },
+    { kannada:"________ (ಯಾವಾಗ) ಪರೀಕ್ಷೆ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कदा", options:["कदा","कथम्","कुतः","किमर्थम्"] } ], fullSanskrit:"कदा परीक्षा?" },
+    { kannada:"________ (ಎಲ್ಲಿಂದ) ಈ ಶಬ್ದ?", blanks:[ { role:"ಪ್ರಶ್ನೆ", correct:"कुतः", options:["कुतः","कदा","कथम्","किमर्थम्"] } ], fullSanskrit:"कुतः अयम् शब्दः?" }
+  ];
+
+  // Pad to exactly 50 if needed (already 50)
+  questions.length = 50;
+
+  // Shuffle
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  shuffleArray(questions);
+
+  let currentIdx = 0;
+  let score = 0;
+  let selections = {};   // role -> chosen word
+  let answered = false;
+
+  const app = document.getElementById('gameApp');
+
+  function render() {
+    const q = questions[currentIdx];
+    let sentenceHtml = q.kannada;
+    q.blanks.forEach((b, i) => {
+      const roleKey = b.role;
+      const chosen = selections[roleKey] || '❓';
+      const filledClass = selections[roleKey] ? 'filled' : '';
+      sentenceHtml = sentenceHtml.replace('________', `<span class="blank ${filledClass}" data-role="${roleKey}">${chosen}</span>`);
+    });
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div class="divider-om">
+          <div class="divider-line"></div>
+          <span class="om-symbol">ॐ</span>
+          <div class="divider-line"></div>
+        </div>
+        <div class="level-badge">Level 3 · अव्यय-प्रश्नपदानि</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+        <span style="font-size:1.2em;">प्रश्न ${currentIdx+1}/50</span>
+      </div>
+      <div class="sentence-box">${sentenceHtml}</div>
+      <div class="controls">
+        <button class="btn check-btn" id="checkBtn" ${answered?'disabled':''}>✅ परीक्षते</button>
+        <button class="btn next-btn" id="nextBtn" style="display:${answered?'inline-block':'none'};">⏩ अग्रिमः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div id="translationArea"></div>
+      <div class="score">अङ्काः · Score: ${score}</div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    document.querySelectorAll('.blank').forEach(blank => {
+      blank.addEventListener('click', (e) => {
+        if (answered) return;
+        const role = e.currentTarget.dataset.role;
+        showPopup(role, e.currentTarget);
+      });
+    });
+    document.getElementById('checkBtn').addEventListener('click', checkAnswers);
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+  }
+
+  function showPopup(role, blankElem) {
+    const q = questions[currentIdx];
+    const blankData = q.blanks.find(b => b.role === role);
+    if (!blankData) return;
+    const opts = blankData.options;
+    const oldPopup = document.querySelector('.popup');
+    if (oldPopup) oldPopup.remove();
+
+    const popup = document.createElement('div');
+    popup.className = 'popup';
+    popup.innerHTML = opts.map(opt => `<button class="opt-btn">${opt}</button>`).join('');
+    document.body.appendChild(popup);
+
+    const rect = blankElem.getBoundingClientRect();
+    popup.style.display = 'flex';
+    popup.style.position = 'fixed';
+    popup.style.top = (rect.bottom + 5) + 'px';
+    popup.style.left = (rect.left + rect.width/2 - 140) + 'px';
+    popup.style.zIndex = '200';
+
+    popup.querySelectorAll('.opt-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        selections[role] = e.target.textContent;
+        popup.remove();
+        render();
+      });
+    });
+
+    setTimeout(() => {
+      const closeHandler = (e) => {
+        if (!popup.contains(e.target)) {
+          popup.remove();
+          document.removeEventListener('click', closeHandler);
+        }
+      };
+      document.addEventListener('click', closeHandler);
+    }, 10);
+  }
+
+  function checkAnswers() {
+    const q = questions[currentIdx];
+    let correctCount = 0;
+    let feedback = '';
+    q.blanks.forEach(b => {
+      if (selections[b.role] === b.correct) correctCount++;
+      else feedback += `${b.role}: ${b.correct} `;
+    });
+    const allCorrect = correctCount === q.blanks.length;
+    if (allCorrect) {
+      feedback = '🎉 सर्वं सम्यक्!';
+      score += 10;
+    } else {
+      feedback = `${correctCount}/${q.blanks.length} साधु। सत्यम्: ` + feedback;
+    }
+    document.getElementById('feedback').textContent = feedback;
+    answered = true;
+    document.getElementById('checkBtn').disabled = true;
+    document.getElementById('nextBtn').style.display = 'inline-block';
+    document.querySelector('.score').textContent = `अङ्काः · Score: ${score}`;
+
+    const transDiv = document.getElementById('translationArea');
+    if (transDiv) {
+      transDiv.innerHTML = `<div class="full-translation">📖 पूर्णवाक्यम्: <strong>${q.fullSanskrit}</strong></div>`;
+    }
+  }
+
+  function nextQuestion() {
+    if (currentIdx < 49) {
+      currentIdx++;
+      selections = {};
+      answered = false;
+      render();
+    } else {
+      app.innerHTML = `
+        <h2 style="font-family:'Inknut Antiqua',serif;color:var(--ink-maroon);">क्रीडा समाप्ता!</h2>
+        <p style="font-size:1.8em;">कुलाङ्कः · Total Score: ${score} / 500</p>
+        <button class="btn restart-btn" onclick="location.reload()">पुनः क्रीडामः</button>
+      `;
+    }
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
