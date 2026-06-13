@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    /* ═══════════════════════ ═══════════════════════
+       ಎಲ್ಲ CSS ಇಲ್ಲಿ ಹಾಗೆಯೇ ಇದೆ – ಬದಲಾವಣೆ ಇಲ್ಲ
+    ═══════════════════════ ═══════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -65,7 +68,6 @@
       display: flex; flex-direction: column; align-items: center;
     }
 
-    /* ══ HEADER ══ */
     .header-band { width: 100%; text-align: center; padding: 14px 0 10px; }
     .presenter {
       font-family: 'Laila', serif; font-size: clamp(11px, 2.2vw, 14px); font-weight: 500;
@@ -88,7 +90,6 @@
       50%      { opacity: 0.65; transform: scale(1.1); }
     }
 
-    /* ══ LOGO ══ */
     .logo-strip { margin: 4px 0 12px; }
     .logo-strip img {
       height: 88px; width: auto;
@@ -100,7 +101,6 @@
       50%      { transform: translateY(-7px); }
     }
 
-    /* ══ TITLE ══ */
     .main-title {
       font-family: 'Inknut Antiqua', serif; font-weight: 800;
       font-size: clamp(28px, 7.5vw, 58px); color: var(--ink-maroon);
@@ -117,7 +117,6 @@
       color: var(--gold-dark); letter-spacing: 0.22em; text-align: center; margin-bottom: 8px;
     }
 
-    /* ══ TAGLINE ══ */
     .tagline-band {
       background: linear-gradient(135deg, var(--ink-maroon) 0%, #5a0000 100%);
       color: var(--gold-light);
@@ -129,7 +128,6 @@
     .tagline-band::before { content: '✦'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 10px; }
     .tagline-band::after  { content: '✦'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 10px; }
 
-    /* ══ VISUAL ══ */
     .visual-wrap {
       position: relative; width: clamp(200px, 50vw, 300px);
       margin: 0 auto 24px;
@@ -176,7 +174,6 @@
       color: var(--gold-dark); text-align: center; padding: 0 14px; line-height: 1.5;
     }
 
-    /* ══ CTA ══ */
     .cta-section {
       display: flex; flex-direction: column; align-items: center;
       gap: 14px; width: 100%; max-width: 400px; margin: 0 auto 26px;
@@ -222,7 +219,6 @@
     }
     .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #3a0000, 0 10px 24px rgba(128,0,0,0.38); }
 
-    /* ══ FEATURES ══ */
     .features {
       display: flex; gap: 10px; justify-content: center;
       flex-wrap: wrap; margin-bottom: 30px; width: 100%;
@@ -236,9 +232,6 @@
       display: flex; align-items: center; gap: 5px;
     }
 
-    /* ══════════════════════════════════════════
-       CANDY CRUSH MAP
-    ══════════════════════════════════════════ */
     .map-heading {
       font-family: 'Inknut Antiqua', serif; font-weight: 700;
       font-size: clamp(16px, 3.8vw, 21px); color: var(--ink-maroon);
@@ -254,20 +247,17 @@
       position: relative; padding-bottom: 16px;
     }
 
-    /* SVG path behind everything */
     .map-svg {
       position: absolute; top: 0; left: 0;
       width: 100%; pointer-events: none; z-index: 0; overflow: visible;
     }
 
-    /* Each horizontal row */
     .map-row {
       display: flex; align-items: center; justify-content: space-around;
       position: relative; z-index: 1;
       padding: 0 16px; min-height: 90px;
     }
 
-    /* ── Node base ── */
     .level-node {
       width: 64px; height: 64px; border-radius: 50%;
       display: flex; flex-direction: column;
@@ -277,7 +267,6 @@
       transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    /* UNLOCKED */
     .level-node.unlocked {
       background: radial-gradient(circle at 36% 30%, #ffe566 0%, #c8960c 80%);
       border: 3px solid #a07010;
@@ -294,7 +283,6 @@
       color: #5a2000; letter-spacing: 0.04em; line-height: 1; margin-top: 1px;
     }
 
-    /* CURRENT — glowing saffron */
     .level-node.current {
       background: radial-gradient(circle at 36% 30%, #ffaa60 0%, #e86a17 80%);
       border: 3px solid #c04000;
@@ -322,7 +310,6 @@
       letter-spacing: 0.06em; box-shadow: 0 2px 6px rgba(128,0,0,0.4);
     }
 
-    /* LOCKED */
     .level-node.locked {
       background: radial-gradient(circle at 36% 30%, #e2d8b8 0%, #b8a878 80%);
       border: 3px solid #9a8860;
@@ -335,7 +322,6 @@
       color: #7a6840; line-height: 1; margin-top: 1px;
     }
 
-    /* MILESTONE (every 10 levels) — larger, green when unlocked */
     .level-node.milestone { width: 74px; height: 74px; }
     .level-node.milestone.unlocked, .level-node.milestone.current {
       background: radial-gradient(circle at 36% 30%, #b8f080 0%, #3a7a18 80%);
@@ -346,7 +332,6 @@
     .level-node.milestone.current  .node-num { font-size: 12px; color: #fff; }
     .milestone-icon { font-size: 26px; line-height: 1; }
 
-    /* Milestone chapter banner */
     .chapter-banner {
       text-align: center; margin: 2px 0; position: relative; z-index: 2;
     }
@@ -357,7 +342,6 @@
       padding: 3px 20px; border-radius: 100px; letter-spacing: 0.1em;
     }
 
-    /* ── Locked toast ── */
     .lock-toast {
       position: fixed; bottom: 80px;
       left: 50%; transform: translateX(-50%) translateY(16px);
@@ -370,7 +354,6 @@
     }
     .lock-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* ══ MANTRA ══ */
     .mantra-scroll {
       width: 100%; max-width: 460px;
       background: var(--ink-maroon); border-radius: 3px;
@@ -391,7 +374,6 @@
       color: rgba(240,192,64,0.5); margin-top: 5px;
     }
 
-    /* ══ FOOTER ══ */
     footer {
       text-align: center; padding: 18px 0 8px;
       border-top: 1px solid rgba(200,150,12,0.28); width: 100%;
@@ -406,7 +388,6 @@
       color: rgba(74,37,17,0.45); margin-top: 3px;
     }
 
-    /* ══ SPARKLES ══ */
     .sparkle {
       position: fixed; pointer-events: none; z-index: 400;
       font-size: 14px; opacity: 0;
@@ -481,11 +462,6 @@
       <span class="petal" style="--start:180deg; --r:108px; animation-duration:11s;">🪷</span>
       <span class="petal" style="--start:270deg; --r:113px; animation-duration:13s;">✨</span>
       <div class="visual-frame">
-        <!--
-          Replace placeholder with:
-          <video autoplay loop muted playsinline src="./balabodhini/assets/images/krishna.mp4"></video>
-          OR: <img src="./balabodhini/assets/images/krishna.png" alt="बालकृष्णः" />
-        -->
         <div class="visual-placeholder">
           <span class="krishna-icon">🦚</span>
           <span class="placeholder-text">बालकृष्णस्य 3D चलचित्रम्<br>अत्र स्थास्यति</span>
@@ -515,7 +491,7 @@
 
     <!-- MAP HEADING -->
     <h2 class="map-heading">अध्ययन-पथः · Learning Path</h2>
-    <p class="map-sub">२०० स्तराः · 200 Levels — Complete one to unlock the next!</p>
+    <p class="map-sub">२५ स्तराः · 25 Levels — Complete one to unlock the next!</p>
 
     <!-- CANDY CRUSH MAP (built by JS) -->
     <div class="map-container" id="mapContainer"></div>
@@ -536,32 +512,17 @@
   </div><!-- /page -->
 
   <script>
-  /* ─── CONFIG ─── */
-  const TOTAL_LEVELS   = 200;
-  const NODES_PER_ROW  = 3;    // nodes per zig-zag segment
-  const VISIBLE_LEVELS = 24;   // how many levels to render in the map
+  /* ═══════════════════════════════════════════
+     25 LEVEL CONFIG
+  ═══════════════════════════════════════════ */
+  const TOTAL_LEVELS   = 25;
+  const NODES_PER_ROW  = 3;
+  const VISIBLE_LEVELS = 25;   // all 25 visible
 
   const MILESTONES = {
     10:  { icon:'🌸', title:'वर्णमाला · Alphabet'   },
     20:  { icon:'📖', title:'शब्दाः · Words'         },
-    30:  { icon:'✏️',  title:'वाक्यम् · Sentences'   },
-    40:  { icon:'🔢', title:'गणनम् · Counting'       },
-    50:  { icon:'🏅', title:'अर्धशतम् · Half Century'},
-    60:  { icon:'📿', title:'श्लोकः · Shloka'        },
-    70:  { icon:'🦚', title:'कथाः · Stories'         },
-    80:  { icon:'🌙', title:'नक्षत्राः · Night Sky'  },
-    90:  { icon:'🌞', title:'सूर्यगीतम् · Sun Songs' },
-    100: { icon:'🏆', title:'शतस्तरः · Century!'     },
-    110: { icon:'🎵', title:'संगीतम् · Music'        },
-    120: { icon:'🌿', title:'प्रकृतिः · Nature'      },
-    130: { icon:'⭐', title:'नक्षत्राः · Stars'      },
-    140: { icon:'📚', title:'ग्रन्थाः · Books'       },
-    150: { icon:'🎭', title:'नाटकम् · Drama'         },
-    160: { icon:'🔬', title:'विज्ञानम् · Science'    },
-    170: { icon:'🎨', title:'कलाः · Arts'           },
-    180: { icon:'🌍', title:'भूगोलः · Geography'    },
-    190: { icon:'🧘', title:'योगः · Yoga'            },
-    200: { icon:'👑', title:'गुरुः · Master!'        },
+    25:  { icon:'👑', title:'गुरुः · Master!'        },
   };
 
   /* ─── STATE ─── */
@@ -621,7 +582,6 @@
           inner += `<span class="node-label">स्तरः</span>`;
         }
       } else {
-        // locked
         inner += `<span class="lock-icon">🔒</span>`;
         inner += `<span class="node-num">${lvl}</span>`;
       }
@@ -635,12 +595,6 @@
 
     html += '</div>';
   });
-
-  if (TOTAL_LEVELS > show) {
-    html += `<div style="text-align:center;margin:10px 0 0;font-family:'Laila',serif;font-size:12px;font-weight:500;color:var(--gold-dark);opacity:0.7;">
-      ✦ ${TOTAL_LEVELS - show} अधिकस्तराः · ${TOTAL_LEVELS - show} more levels await ✦
-    </div>`;
-  }
 
   container.innerHTML = html;
 
@@ -672,7 +626,6 @@
     svg.setAttribute('height', H);
     svg.style.height = H + 'px';
 
-    // Build smooth cubic bezier path
     function buildD(pointArr) {
       let d = `M ${pointArr[0].x.toFixed(1)} ${pointArr[0].y.toFixed(1)}`;
       for (let i = 1; i < pointArr.length; i++) {
@@ -775,10 +728,7 @@
     document.querySelector('.' + c).innerHTML = tlSVG
   );
 
-  /* ─── DEV HELPER ───
-     Open browser console and type:
-       completeLevel(5)   → unlocks through level 5 and reloads
-  ─── */
+  /* ─── DEV HELPER ─── */
   window.completeLevel = n => {
     localStorage.setItem('sb_unlocked', n);
     location.reload();
