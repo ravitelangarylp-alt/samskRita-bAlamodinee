@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 4 – अक्षर-पहेली · Word Search | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #fdf3dc;
+      --ink-brown: #4a2511;
+      --ink-maroon: #800000;
+      --gold: #c8960c;
+      --gold-light: #f0c040;
+      --gold-dark: #8b6914;
+      --saffron: #e86a17;
+      --cream: #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
+    }
+    .container {
+      max-width: 750px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+      z-index: 1;
+    }
+    .header-band { margin-bottom: 10px; }
+    .presenter {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 15px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .info-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 10px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .timer { font-size: 1.2em; font-weight: bold; color: var(--saffron); }
+    .score-display { font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+    .difficulty-select {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+    }
+    .diff-btn {
+      padding: 10px 20px; border: none; border-radius: 25px;
+      background: #f0deb4; color: var(--ink-brown);
+      font-weight: bold; cursor: pointer; transition: 0.2s;
+      font-size: 1em;
+    }
+    .diff-btn.active {
+      background: var(--saffron); color: white;
+      box-shadow: 0 4px 10px rgba(232,106,23,0.4);
+    }
+    .puzzle-area { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 15px 0; }
+    .grid-wrapper {
+      background: #fff3e0; border-radius: 15px; padding: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .grid {
+      display: grid; gap: 2px;
+    }
+    .cell {
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: #f9e4b7; border-radius: 6px; cursor: pointer;
+      font-family: 'Inknut Antiqua', serif; font-size: 1.3em; font-weight: 700;
+      color: var(--ink-brown); transition: 0.1s;
+      user-select: none;
+    }
+    .cell.selected { background: #ffab91; }
+    .cell.found { background: #81c784; color: #1b5e20; }
+    .cell.highlight { background: #ffe082; }
+    .cell.wrong { background: #ef9a9a; animation: shake 0.3s; }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+    .word-list {
+      background: #fff8e1; border-radius: 12px; padding: 10px;
+      min-width: 160px; max-height: 300px; overflow-y: auto;
+    }
+    .word-list h3 {
+      font-family: 'Inknut Antiqua', serif; color: var(--ink-maroon); margin-bottom: 8px;
+    }
+    .word-item {
+      font-size: 1.1em; padding: 3px 5px; margin: 2px 0;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .word-item.found-word { text-decoration: line-through; color: #2e7d32; }
+    .controls { margin: 15px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px; transition: 0.2s; font-size: 1em;
+    }
+    .back-btn { background: var(--gold); color: white; }
+    .check-btn { background: #00695c; color: white; }
+    .reset-btn { background: #ff8f00; color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 15px; padding: 10px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+(function(){
+  function splitGraphemes(str) {
+    if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+      const segmenter = new Intl.Segmenter('sa', { granularity: 'grapheme' });
+      return [...segmenter.segment(str)].map(seg => seg.segment);
+    }
+    return str.match(/.[\u0900-\u097F\u1CD0-\u1CFF\uA8E0-\uA8FF]*/g) || str.split('');
+  }
+
+  const levels = {
+    easy: {
+      name: 'सरलः',
+      words: ['रामः','फलम्','जलम्','गुरुः','वनम्','सीता'],
+    },
+    medium: {
+      name: 'मध्यमः',
+      words: ['अहम्','त्वम्','श्वः','उपरि','कुत्र','तत्र'],
+    },
+    hard: {
+      name: 'कठिनः',
+      words: ['गच्छति','पठन्ति','कुर्वन्ति','पश्यन्ति','ददाति','खादति'],
+    }
+  };
+
+  let currentDifficulty = 'easy';
+  let puzzleData = null;
+  let foundWords = [];
+  let selectedCells = [];
+  let isMouseDown = false;
+  let startCell = null;
+  let timer = 60;
+  let timerInterval = null;
+  let score = 0;
+  let gameComplete = false;
+
+  const app = document.getElementById('app');
+
+  function generatePuzzle(words) {
+    const size = 8;
+    let grid = Array(size).fill().map(() => Array(size).fill(''));
+    let placed = [];
+
+    const dirs = [
+      [0,1], [1,0], [1,1], [1,-1],
+      [0,-1], [-1,0], [-1,-1], [-1,1]
+    ];
+
+    function canPlace(graphemes, row, col, dr, dc) {
+      for (let i=0; i<graphemes.length; i++) {
+        const r = row + i*dr, c = col + i*dc;
+        if (r<0||r>=size||c<0||c>=size) return false;
+        if (grid[r][c] !== '' && grid[r][c] !== graphemes[i]) return false;
+      }
+      return true;
+    }
+
+    function placeWord(graphemes, row, col, dr, dc) {
+      const cells = [];
+      for (let i=0; i<graphemes.length; i++) {
+        const r = row + i*dr, c = col + i*dc;
+        grid[r][c] = graphemes[i];
+        cells.push({row:r, col:c});
+      }
+      return cells;
+    }
+
+    const shuffled = [...words].sort(()=>Math.random()-0.5);
+    for (let word of shuffled) {
+      const graphemes = splitGraphemes(word);
+      for (let attempt=0; attempt<200; attempt++) {
+        const dir = dirs[Math.floor(Math.random()*dirs.length)];
+        const row = Math.floor(Math.random()*size);
+        const col = Math.floor(Math.random()*size);
+        if (canPlace(graphemes, row, col, dir[0], dir[1])) {
+          const cells = placeWord(graphemes, row, col, dir[0], dir[1]);
+          placed.push({ word, cells });
+          break;
+        }
+      }
+    }
+
+    const baseLetters = 'अआइईउऊएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसहःं';
+    for (let r=0; r<size; r++) {
+      for (let c=0; c<size; c++) {
+        if (grid[r][c] === '') {
+          grid[r][c] = baseLetters[Math.floor(Math.random() * baseLetters.length)];
+        }
+      }
+    }
+
+    return { grid, placedWords: placed };
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timer = 60;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      timer--;
+      updateTimerDisplay();
+      if (timer <= 0) {
+        clearInterval(timerInterval);
+        endGame(false);
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const timerEl = document.getElementById('timerDisplay');
+    if (timerEl) {
+      timerEl.textContent = `⏱️ ${timer} से`;
+      timerEl.style.color = timer <= 10 ? '#d32f2f' : '#e86a17';
+    }
+  }
+
+  function endGame(won) {
+    gameComplete = true;
+    clearInterval(timerInterval);
+    const fb = document.getElementById('feedback');
+    if (fb) {
+      fb.innerHTML = won 
+        ? '🎉 अभिनन्दनम्! सर्वे पदानि प्राप्तानि!' 
+        : `⏰ कालवसानम्! ${foundWords.length}/${puzzleData.placedWords.length} पदानि।`;
+    }
+    document.getElementById('checkBtn')?.setAttribute('disabled','true');
+    document.getElementById('resetBtn')?.setAttribute('disabled','true');
+  }
+
+  function checkSelection() {
+    if (gameComplete) return;
+    if (selectedCells.length === 0) {
+      document.getElementById('feedback').textContent = 'कृपया पदं चिनुत।';
+      return;
+    }
+
+    const selectedStr = selectedCells.map(({row,col})=>puzzleData.grid[row][col]).join('');
+    const foundIndex = puzzleData.placedWords.findIndex((pw,idx)=>{
+      if (foundWords.includes(idx)) return false;
+      if (pw.word !== selectedStr) return false;
+      if (pw.cells.length !== selectedCells.length) return false;
+      return pw.cells.every((c,i)=> c.row===selectedCells[i].row && c.col===selectedCells[i].col);
+    });
+
+    if (foundIndex >= 0) {
+      puzzleData.placedWords[foundIndex].cells.forEach(({row,col})=>{
+        document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`)?.classList.add('found');
+      });
+      foundWords.push(foundIndex);
+      score += 10;
+      document.querySelector(`.word-item[data-word-idx="${foundIndex}"]`)?.classList.add('found-word');
+      document.getElementById('feedback').textContent = '✅ सम्यक्! +10';
+      document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+      if (foundWords.length === puzzleData.placedWords.length) endGame(true);
+    } else {
+      score = Math.max(0, score - 2);
+      document.getElementById('feedback').textContent = '❌ पुनः प्रयत्नं कुरुत। -2';
+      document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+      selectedCells.forEach(({row,col})=>{
+        const cellEl = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        if (cellEl) { cellEl.classList.add('wrong'); setTimeout(()=>cellEl.classList.remove('wrong'), 300); }
+      });
+    }
+    clearHighlights();
+    selectedCells = [];
+    startCell = null;
+  }
+
+  function resetSelection() {
+    clearHighlights();
+    selectedCells = [];
+    startCell = null;
+    document.getElementById('feedback').textContent = '';
+  }
+
+  function clearHighlights() {
+    document.querySelectorAll('.cell.highlight, .cell.selected').forEach(cell=>{
+      cell.classList.remove('highlight','selected');
+    });
+  }
+
+  function renderPuzzle() {
+    const diff = levels[currentDifficulty];
+    puzzleData = generatePuzzle(diff.words);
+    foundWords = [];
+    selectedCells = [];
+    startCell = null;
+    score = 0;
+    gameComplete = false;
+
+    const gridStyle = `grid-template-columns: repeat(${puzzleData.grid[0].length}, 44px); grid-template-rows: repeat(${puzzleData.grid.length}, 44px);`;
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0;">
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+          <span style="font-family:'Inknut Antiqua',serif;font-size:24px;color:#e86a17;">ॐ</span>
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+        </div>
+        <div class="level-badge">Level 4 · अक्षर-पहेली</div>
+      </div>
+      <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+      <div class="info-bar">
+        <span class="timer" id="timerDisplay">⏱️ 60 से</span>
+        <span class="score-display" id="scoreDisplay">अङ्काः: 0</span>
+      </div>
+      <div class="difficulty-select">
+        ${['easy','medium','hard'].map(d=>`
+          <button class="diff-btn ${d===currentDifficulty?'active':''}" data-diff="${d}">
+            ${d==='easy'?'🌸 सरल':d==='medium'?'📖 मध्यम':'⚡ कठिन'}
+          </button>
+        `).join('')}
+      </div>
+      <div class="puzzle-area">
+        <div class="grid-wrapper">
+          <div class="grid" id="gridContainer" style="${gridStyle}">
+            ${puzzleData.grid.map((row,r)=>row.map((ch,c)=>
+              `<div class="cell" data-row="${r}" data-col="${c}">${ch}</div>`
+            ).join('')).join('')}
+          </div>
+        </div>
+        <div class="word-list" id="wordList">
+          <h3>🔍 पदानि</h3>
+          ${puzzleData.placedWords.map((pw,i)=>
+            `<div class="word-item" data-word-idx="${i}">${pw.word}</div>`
+          ).join('')}
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn check-btn" id="checkBtn">✅ परीक्षते</button>
+        <button class="btn reset-btn" id="resetBtn">🔄 पुनः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    const gridContainer = document.getElementById('gridContainer');
+
+    // Mouse events
+    gridContainer.addEventListener('mousedown', (e) => {
+      if (gameComplete) return;
+      const cell = e.target.closest('.cell');
+      if (!cell) return;
+      startCell = { row: +cell.dataset.row, col: +cell.dataset.col };
+      clearHighlights();
+      selectedCells = [{row: startCell.row, col: startCell.col}];
+      cell.classList.add('selected');
+      isMouseDown = true;
+    });
+
+    gridContainer.addEventListener('mouseenter', (e) => {
+      if (!isMouseDown || !startCell || gameComplete) return;
+      const cell = e.target.closest('.cell');
+      if (!cell) return;
+      const endRow = +cell.dataset.row, endCol = +cell.dataset.col;
+      const dr = Math.sign(endRow - startCell.row);
+      const dc = Math.sign(endCol - startCell.col);
+      if (Math.abs(endRow-startCell.row)!==Math.abs(endCol-startCell.col) && 
+          !(startCell.row===endRow) && !(startCell.col===endCol)) return;
+      clearHighlights();
+      selectedCells = [];
+      const steps = Math.max(Math.abs(endRow-startCell.row), Math.abs(endCol-startCell.col));
+      for (let i=0; i<=steps; i++) {
+        const r = startCell.row + i*dr, c = startCell.col + i*dc;
+        const cellEl = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+        if (cellEl) { cellEl.classList.add('highlight'); selectedCells.push({row:r, col:c}); }
+      }
+    });
+
+    document.addEventListener('mouseup', () => { if (!gameComplete) isMouseDown = false; });
+
+    // Touch events
+    gridContainer.addEventListener('touchstart', (e) => {
+      if (gameComplete) return;
+      const touch = e.touches[0];
+      const cell = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.cell');
+      if (!cell) return;
+      startCell = { row: +cell.dataset.row, col: +cell.dataset.col };
+      clearHighlights();
+      selectedCells = [{row: startCell.row, col: startCell.col}];
+      cell.classList.add('selected');
+      isMouseDown = true;
+      e.preventDefault();
+    }, {passive: false});
+
+    gridContainer.addEventListener('touchmove', (e) => {
+      if (!isMouseDown || !startCell || gameComplete) return;
+      const touch = e.touches[0];
+      const cell = document.elementFromPoint(touch.clientX, touch.clientY)?.closest('.cell');
+      if (!cell) return;
+      const endRow = +cell.dataset.row, endCol = +cell.dataset.col;
+      const dr = Math.sign(endRow - startCell.row), dc = Math.sign(endCol - startCell.col);
+      if (Math.abs(endRow-startCell.row)!==Math.abs(endCol-startCell.col) && 
+          !(startCell.row===endRow) && !(startCell.col===endCol)) return;
+      clearHighlights();
+      selectedCells = [];
+      const steps = Math.max(Math.abs(endRow-startCell.row), Math.abs(endCol-startCell.col));
+      for (let i=0; i<=steps; i++) {
+        const r = startCell.row + i*dr, c = startCell.col + i*dc;
+        const cellEl = document.querySelector(`.cell[data-row="${r}"][data-col="${c}"]`);
+        if (cellEl) { cellEl.classList.add('highlight'); selectedCells.push({row:r, col:c}); }
+      }
+      e.preventDefault();
+    }, {passive: false});
+
+    document.addEventListener('touchend', () => { if (!gameComplete) isMouseDown = false; });
+
+    document.getElementById('checkBtn').addEventListener('click', checkSelection);
+    document.getElementById('resetBtn').addEventListener('click', resetSelection);
+
+    document.querySelectorAll('.diff-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        currentDifficulty = e.target.dataset.diff;
+        clearInterval(timerInterval);
+        renderPuzzle();
+        startTimer();
+      });
+    });
+
+    startTimer();
+  }
+
+  renderPuzzle();
+})();
+</script>
+</body>
+</html>
