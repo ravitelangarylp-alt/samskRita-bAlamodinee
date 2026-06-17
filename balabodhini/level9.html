@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 9 – वाक्य-निर्माणम् · Sentence Builder | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #fdf3dc;
+      --ink-brown: #4a2511;
+      --ink-maroon: #800000;
+      --gold: #c8960c;
+      --gold-light: #f0c040;
+      --gold-dark: #8b6914;
+      --saffron: #e86a17;
+      --cream: #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
+    }
+    .container {
+      max-width: 800px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+      z-index: 1;
+    }
+    .header-band { margin-bottom: 10px; }
+    .presenter {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 15px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .info-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 10px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .score-display { font-size: 1.3em; font-weight: bold; color: #2e7d32; }
+    .kannada-sentence {
+      font-family: 'Laila', serif;
+      font-size: 1.8em; font-weight: 700;
+      color: var(--ink-maroon);
+      background: #fff3e0;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px solid var(--gold);
+      margin: 15px 0;
+    }
+    .sanskrit-sentence {
+      font-family: 'Inknut Antiqua', serif;
+      font-size: 1.6em; font-weight: 600;
+      color: var(--ink-brown);
+      background: #f9e4b7;
+      padding: 20px;
+      border-radius: 15px;
+      border: 2px dashed var(--gold-dark);
+      margin: 15px 0;
+      min-height: 70px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .sanskrit-sentence .slot {
+      display: inline-block;
+      min-width: 80px;
+      padding: 8px 15px;
+      background: #fff;
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      cursor: pointer;
+      color: #d84315;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+    .sanskrit-sentence .slot.filled {
+      background: #c8e6c9;
+      border-color: #2e7d32;
+      color: #1b5e20;
+    }
+    .sanskrit-sentence .fixed-word {
+      color: #4a2511;
+    }
+    .word-bank {
+      background: #fff8e1;
+      border-radius: 20px;
+      padding: 15px;
+      margin: 15px 0;
+      border: 2px solid var(--gold);
+      min-height: 80px;
+    }
+    .word-bank h3 {
+      font-family: 'Inknut Antiqua', serif;
+      color: var(--ink-maroon);
+      margin-bottom: 10px;
+    }
+    .word-chips {
+      display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    }
+    .word-chip {
+      padding: 10px 18px;
+      font-family: 'Inknut Antiqua', serif;
+      font-size: 1.2em; font-weight: 600;
+      background: #ffe0b2;
+      border: 2px solid var(--gold-dark);
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.2s;
+      color: var(--ink-brown);
+    }
+    .word-chip:hover { background: #ffcc80; transform: scale(1.05); }
+    .word-chip.used {
+      opacity: 0.4;
+      pointer-events: none;
+      text-decoration: line-through;
+    }
+    .controls { margin: 15px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px; transition: 0.2s; font-size: 1em;
+    }
+    .back-btn { background: var(--gold); color: white; }
+    .check-btn { background: #00695c; color: white; font-size: 1.2em; }
+    .reset-btn { background: #ff8f00; color: white; }
+    .next-btn { background: #1565c0; color: white; font-size: 1.2em; }
+    .restart-btn { background: var(--ink-maroon); color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 15px; padding: 10px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+(function(){
+  const questions = [
+    {
+      kannada: 'ರಾಮನು ಹಣ್ಣನ್ನು ತಿನ್ನುತ್ತಾನೆ',
+      sanskritTemplate: ['रामः', '_____', '_____'],
+      slots: [
+        { index: 1, correct: 'फलम्', wordBank: ['फलम्','जलम्','पुष्पम्','पत्रम्','अन्नम्'] },
+        { index: 2, correct: 'खादति', wordBank: ['खादति','पिबति','पठति','लिखति','गच्छति'] },
+      ],
+      fixedWords: ['रामः']
+    },
+    {
+      kannada: 'ಸೀತೆಯು ಪುಸ್ತಕವನ್ನು ಓದುತ್ತಾಳೆ',
+      sanskritTemplate: ['सीता', '_____', '_____'],
+      slots: [
+        { index: 1, correct: 'पुस्तकम्', wordBank: ['पुस्तकम्','पत्रम्','चित्रम्','फलकम्','लेखनी'] },
+        { index: 2, correct: 'पठति', wordBank: ['पठति','लिखति','खादति','गायति','नृत्यति'] },
+      ],
+      fixedWords: ['सीता']
+    },
+    {
+      kannada: 'ಬಾಲಕನು ಜಲವನ್ನು ಕುಡಿಯುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'बालकः', wordBank: ['बालकः','बालिका','रामः','सीता','गुरुः'] },
+        { index: 1, correct: 'जलम्', wordBank: ['जलम्','दुग्धम्','फलम्','अन्नम्','मधु'] },
+        { index: 2, correct: 'पिबति', wordBank: ['पिबति','खादति','पठति','गच्छति','हसति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಗುರುಗಳು ಶಿಷ್ಯನಿಗೆ ಜ್ಞಾನವನ್ನು ಕೊಡುತ್ತಾರೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'गुरुः', wordBank: ['गुरुः','शिक्षकः','पिता','राजा','कविः'] },
+        { index: 1, correct: 'शिष्याय', wordBank: ['शिष्याय','बालकाय','रामाय','जनाय','नृपाय'] },
+        { index: 2, correct: 'ज्ञानम्', wordBank: ['ज्ञानम्','धनम्','पुस्तकम्','फलम्','जलम्'] },
+        { index: 3, correct: 'ददाति', wordBank: ['ददाति','गृह्णाति','पठति','करोति','वदति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಅವಳು ಉದ್ಯಾನದಲ್ಲಿ ನೃತ್ಯ ಮಾಡುತ್ತಾಳೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'सा', wordBank: ['सा','सः','ते','अहम्','त्वम्'] },
+        { index: 1, correct: 'उद्याने', wordBank: ['उद्याने','विद्यालये','गृहे','वने','नगरे'] },
+        { index: 2, correct: 'नृत्यति', wordBank: ['नृत्यति','गायति','पठति','लिखति','खादति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನಾವು ವಿದ್ಯಾಲಯಕ್ಕೆ ಹೋಗುತ್ತೇವೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'वयम्', wordBank: ['वयम्','अहम्','त्वम्','यूयम्','ते'] },
+        { index: 1, correct: 'विद्यालयम्', wordBank: ['विद्यालयम्','गृहम्','वनम्','नगरम्','उद्यानम्'] },
+        { index: 2, correct: 'गच्छामः', wordBank: ['गच्छामः','गच्छति','गच्छन्ति','गच्छसि','आगच्छामः'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನೀನು ಲೇಖನಿಯಿಂದ ಪತ್ರವನ್ನು ಬರೆಯುತ್ತೀಯೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'त्वम्', wordBank: ['त्वम्','अहम्','सः','सा','वयम्'] },
+        { index: 1, correct: 'लेखन्या', wordBank: ['लेखन्या','हस्तेन','कलमेन','दण्डेन','पादेन'] },
+        { index: 2, correct: 'पत्रम्', wordBank: ['पत्रम्','पुस्तकम्','चित्रम्','फलम्','पुष्पम्'] },
+        { index: 3, correct: 'लिखसि', wordBank: ['लिखसि','लिखति','लिखामि','लिखन्ति','पठसि'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಸೂರ್ಯನು ಆಕಾಶದಲ್ಲಿ ಪ್ರಕಾಶಿಸುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'सूर्यः', wordBank: ['सूर्यः','चन्द्रः','अग्निः','दीपः','नक्षत्रम्'] },
+        { index: 1, correct: 'आकाशे', wordBank: ['आकाशे','भूमौ','जले','वने','गृहे'] },
+        { index: 2, correct: 'प्रकाशते', wordBank: ['प्रकाशते','तिष्ठति','गच्छति','पतति','उदेति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಮಕ್ಕಳು ಕಂದುಕದಿಂದ ಕ್ರೀಡಿಸುತ್ತಾರೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'बालकाः', wordBank: ['बालकाः','बालिकाः','जनाः','गुरवः','कवयः'] },
+        { index: 1, correct: 'कन्दुकेन', wordBank: ['कन्दुकेन','हस्तेन','पादेन','दण्डेन','फलकेन'] },
+        { index: 2, correct: 'क्रीडन्ति', wordBank: ['क्रीडन्ति','पठन्ति','खादन्ति','गायन्ति','नृत्यन्ति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನಾನು ಪ್ರತಿದಿನ ವ್ಯಾಯಾಮವನ್ನು ಮಾಡುತ್ತೇನೆ',
+      sanskritTemplate: ['_____', 'प्रतिदिनम्', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'अहम्', wordBank: ['अहम्','त्वम्','सः','सा','वयम्'] },
+        { index: 2, correct: 'व्यायामम्', wordBank: ['व्यायामम्','भोजनम्','पाठम्','कार्यम्','स्नानम्'] },
+        { index: 3, correct: 'करोमि', wordBank: ['करोमि','करोषि','करोति','कुर्वन्ति','कुरुथ'] },
+      ],
+      fixedWords: ['प्रतिदिनम्']
+    },
+    {
+      kannada: 'ಹಸುವು ಹುಲ್ಲನ್ನು ತಿನ್ನುತ್ತದೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'धेनुः', wordBank: ['धेनुः','अश्वः','गजः','श्वानः','मार्जारः'] },
+        { index: 1, correct: 'तृणम्', wordBank: ['तृणम्','फलम्','जलम्','अन्नम्','पत्रम्'] },
+        { index: 2, correct: 'खादति', wordBank: ['खादति','पिबति','चलति','तिष्ठति','धावति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಪುಷ್ಪಗಳು ವಸಂತಕಾಲದಲ್ಲಿ ವಿಕಸಿತವಾಗುತ್ತವೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'पुष्पाणि', wordBank: ['पुष्पाणि','फलानि','पत्राणि','वृक्षाः','लताः'] },
+        { index: 1, correct: 'वसन्तकाले', wordBank: ['वसन्तकाले','ग्रीष्मकाले','वर्षाकाले','शरत्काले','हेमन्तकाले'] },
+        { index: 2, correct: 'विकसन्ति', wordBank: ['विकसन्ति','पतन्ति','वर्धन्ते','जायन्ते','तिष्ठन्ति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ರಾಜನು ಸಿಂಹಾಸನದ ಮೇಲೆ ಕುಳಿತುಕೊಳ್ಳುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'नृपः', wordBank: ['नृपः','मन्त्री','सेनापतिः','गुरुः','पिता'] },
+        { index: 1, correct: 'सिंहासने', wordBank: ['सिंहासने','पीठे','भूमौ','रथे','अश्वे'] },
+        { index: 2, correct: 'उपविशति', wordBank: ['उपविशति','तिष्ठति','गच्छति','शेते','पश्यति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನದಿಯು ಪರ್ವತದಿಂದ ಸಾಗರಕ್ಕೆ ಹರಿಯುತ್ತದೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'नदी', wordBank: ['नदी','सरित्','गङ्गा','यमुना','सरस्वती'] },
+        { index: 1, correct: 'पर्वतात्', wordBank: ['पर्वतात्','ग्रामात्','नगरात्','वनात्','गृहात्'] },
+        { index: 2, correct: 'सागरम्', wordBank: ['सागरम्','सरोवरम्','कूपम्','जलाशयम्','नदीम्'] },
+        { index: 3, correct: 'प्रवहति', wordBank: ['प्रवहति','गच्छति','पतति','धावति','चलति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ವೈದ್ಯನು ಔಷಧದಿಂದ ರೋಗಿಯನ್ನು ಚಿಕಿತ್ಸಿಸುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'वैद्यः', wordBank: ['वैद्यः','गुरुः','राजा','पिता','माता'] },
+        { index: 1, correct: 'औषधेन', wordBank: ['औषधेन','जलेन','हस्तेन','विद्यया','धनेन'] },
+        { index: 2, correct: 'रोगिणम्', wordBank: ['रोगिणम्','बालकम्','शिष्यम्','जनम्','नृपम्'] },
+        { index: 3, correct: 'चिकित्सति', wordBank: ['चिकित्सति','पाठयति','रक्षति','पालयति','पश्यति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನೀವು ಸತ್ಯವನ್ನು ಹೇಳಬೇಕು',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'यूयम्', wordBank: ['यूयम्','वयम्','त्वम्','अहम्','ते'] },
+        { index: 1, correct: 'सत्यम्', wordBank: ['सत्यम्','धर्मम्','ज्ञानम्','वचनम्','कार्यम्'] },
+        { index: 2, correct: 'वदत', wordBank: ['वदत','वद','वदतु','वदन्तु','वदानि'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಕವಿಯು ಸುಂದರವಾದ ಕಾವ್ಯವನ್ನು ರಚಿಸುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'कविः', wordBank: ['कविः','लेखकः','गुरुः','शिक्षकः','चित्रकारः'] },
+        { index: 1, correct: 'सुन्दरम्', wordBank: ['सुन्दरम्','सरलम्','कठिनम्','दीर्घम्','लघु'] },
+        { index: 2, correct: 'काव्यम्', wordBank: ['काव्यम्','पुस्तकम्','पत्रम्','चित्रम्','श्लोकम्'] },
+        { index: 3, correct: 'रचयति', wordBank: ['रचयति','लिखति','पठति','गायति','वदति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಚಂದ್ರನು ರಾತ್ರಿಯಲ್ಲಿ ಶೀತಲ ಕಿರಣಗಳನ್ನು ಕೊಡುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'चन्द्रः', wordBank: ['चन्द्रः','सूर्यः','नक्षत्रम्','ग्रहः','दीपः'] },
+        { index: 1, correct: 'रात्रौ', wordBank: ['रात्रौ','दिवसे','प्रातः','सायम्','मध्याह्ने'] },
+        { index: 2, correct: 'शीतलान्', wordBank: ['शीतलान्','उष्णान्','तीक्ष्णान्','मृदून्','कठिनान्'] },
+        { index: 3, correct: 'किरणान्', wordBank: ['किरणान्','वचनानि','पत्राणि','फलानि','पुष्पाणि'] },
+        { index: 4, correct: 'यच्छति', wordBank: ['यच्छति','ददाति','करोति','पश्यति','गृह्णाति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಅವನು ಮರದ ಕೆಳಗೆ ನಿಂತಿದ್ದಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'सः', wordBank: ['सः','सा','अहम्','त्वम्','एषः'] },
+        { index: 1, correct: 'वृक्षस्य', wordBank: ['वृक्षस्य','गृहस्य','विद्यालयस्य','देवालयस्य','पर्वतस्य'] },
+        { index: 2, correct: 'अधः', wordBank: ['अधः','उपरि','अन्तः','बहिः','पुरतः'] },
+        { index: 3, correct: 'तिष्ठति', wordBank: ['तिष्ठति','उपविशति','शेते','गच्छति','धावति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಬೆಕ್ಕು ಇಲಿಯನ್ನು ಹಿಡಿಯುತ್ತದೆ',
+      sanskritTemplate: ['_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'मार्जारः', wordBank: ['मार्जारः','श्वानः','सिंहः','वानरः','गजः'] },
+        { index: 1, correct: 'मूषकम्', wordBank: ['मूषकम्','फलम्','अन्नम्','जलम्','पत्रम्'] },
+        { index: 2, correct: 'गृह्णाति', wordBank: ['गृह्णाति','खादति','पश्यति','धावति','त्यजति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ವಿದ್ಯಾರ್ಥಿಯು ಪ್ರಶ್ನೆಗೆ ಉತ್ತರವನ್ನು ಹೇಳುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'छात्रः', wordBank: ['छात्रः','गुरुः','पिता','कविः','राजा'] },
+        { index: 1, correct: 'प्रश्नस्य', wordBank: ['प्रश्नस्य','पाठस्य','पुस्तकस्य','श्लोकस्य','वाक्यस्य'] },
+        { index: 2, correct: 'उत्तरम्', wordBank: ['उत्तरम्','प्रश्नम्','वाक्यम्','पाठम्','श्लोकम्'] },
+        { index: 3, correct: 'वदति', wordBank: ['वदति','लिखति','पठति','पृच्छति','जानाति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ತಾಯಿಯು ಮಗುವಿಗೆ ಹಾಲನ್ನು ಕೊಡುತ್ತಾಳೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'माता', wordBank: ['माता','पिता','गुरुः','भगिनी','सखी'] },
+        { index: 1, correct: 'शिशवे', wordBank: ['शिशवे','बालकाय','बालिकायै','पुत्राय','छात्राय'] },
+        { index: 2, correct: 'दुग्धम्', wordBank: ['दुग्धम्','जलम्','फलम्','अन्नम्','मधु'] },
+        { index: 3, correct: 'यच्छति', wordBank: ['यच्छति','ददाति','करोति','पिबति','खादति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ವಾನರರು ಮರಗಳ ಮೇಲೆ ಜಿಗಿಯುತ್ತಾರೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'वानराः', wordBank: ['वानराः','गजाः','सिंहाः','बालकाः','पक्षिणः'] },
+        { index: 1, correct: 'वृक्षाणाम्', wordBank: ['वृक्षाणाम्','गृहाणाम्','पर्वतानाम्','भवनानाम्','फलानाम्'] },
+        { index: 2, correct: 'उपरि', wordBank: ['उपरि','अधः','अन्तः','बहिः','पुरतः'] },
+        { index: 3, correct: 'कूर्दन्ति', wordBank: ['कूर्दन्ति','धावन्ति','गच्छन्ति','पतन्ति','तिष्ठन्ति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ಅವನು ದೇವಾಲಯದಲ್ಲಿ ಪುಷ್ಪಗಳನ್ನು ಅರ್ಪಿಸುತ್ತಾನೆ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'सः', wordBank: ['सः','सा','अहम्','त्वम्','वयम्'] },
+        { index: 1, correct: 'देवालये', wordBank: ['देवालये','विद्यालये','गृहे','उद्याने','वने'] },
+        { index: 2, correct: 'पुष्पाणि', wordBank: ['पुष्पाणि','फलानि','पत्राणि','जलानि','दीपान्'] },
+        { index: 3, correct: 'अर्पयति', wordBank: ['अर्पयति','ददाति','गृह्णाति','पश्यति','करोति'] },
+      ],
+      fixedWords: []
+    },
+    {
+      kannada: 'ನಾವೆಲ್ಲರೂ ಸುಖವಾಗಿ ಜೀವಿಸೋಣ',
+      sanskritTemplate: ['_____', '_____', '_____', '_____'],
+      slots: [
+        { index: 0, correct: 'वयम्', wordBank: ['वयम्','यूयम्','ते','अहम्','त्वम्'] },
+        { index: 1, correct: 'सर्वे', wordBank: ['सर्वे','केचन','बहवः','द्वौ','एकः'] },
+        { index: 2, correct: 'सुखेन', wordBank: ['सुखेन','दुःखेन','कष्टेन','शीघ्रम्','धीरेण'] },
+        { index: 3, correct: 'जीवामः', wordBank: ['जीवामः','जीवन्ति','जीवसि','जीवति','जीवथ'] },
+      ],
+      fixedWords: []
+    },
+  ];
+
+  let currentIdx = 0;
+  let score = 0;
+  let answered = false;
+  let gameComplete = false;
+  let slotFills = {};
+
+  const app = document.getElementById('app');
+
+  function renderQuestion() {
+    if (gameComplete) return;
+    const q = questions[currentIdx];
+    slotFills = {};
+
+    let sanskritHtml = '';
+    q.sanskritTemplate.forEach((word, i) => {
+      if (word === '_____') {
+        sanskritHtml += `<span class="slot" data-slot="${i}">❓</span>`;
+      } else {
+        sanskritHtml += `<span class="fixed-word">${word}</span>`;
+      }
+    });
+
+    const allWords = [];
+    q.slots.forEach(s => {
+      s.wordBank.forEach(w => {
+        if (!allWords.includes(w)) allWords.push(w);
+      });
+    });
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0;">
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+          <span style="font-family:'Inknut Antiqua',serif;font-size:24px;color:#e86a17;">ॐ</span>
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+        </div>
+        <div class="level-badge">Level 9 · वाक्य-निर्माणम्</div>
+      </div>
+      <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+      <div class="info-bar">
+        <span class="score-display" id="scoreDisplay">अङ्काः: ${score}</span>
+        <span>वाक्यम् ${currentIdx+1}/${questions.length}</span>
+      </div>
+      <div class="kannada-sentence">${q.kannada}</div>
+      <div class="sanskrit-sentence" id="sanskritSentence">${sanskritHtml}</div>
+      <div class="word-bank">
+        <h3>🔤 शब्द-भण्डारः</h3>
+        <div class="word-chips" id="wordChips">
+          ${allWords.map((w,i) => `<span class="word-chip" data-word="${w}" data-index="${i}">${w}</span>`).join('')}
+        </div>
+      </div>
+      <div class="controls">
+        <button class="btn check-btn" id="checkBtn" ${answered?'disabled':''}>✅ परीक्षते</button>
+        <button class="btn reset-btn" id="resetBtn">🔄 पुनः आरभ्यते</button>
+        <button class="btn next-btn" id="nextBtn" style="display:${answered?'inline-block':'none'};">⏩ अग्रिमः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    document.querySelectorAll('.slot').forEach(slot => {
+      slot.addEventListener('click', function() {
+        if (answered || gameComplete) return;
+        const slotIdx = parseInt(this.dataset.slot);
+        if (slotFills[slotIdx]) {
+          const word = slotFills[slotIdx];
+          delete slotFills[slotIdx];
+          this.textContent = '❓';
+          this.classList.remove('filled');
+          document.querySelectorAll('.word-chip').forEach(chip => {
+            if (chip.dataset.word === word) chip.classList.remove('used');
+          });
+        }
+      });
+    });
+
+    document.querySelectorAll('.word-chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        if (answered || gameComplete) return;
+        if (this.classList.contains('used')) return;
+        const word = this.dataset.word;
+        const slots = document.querySelectorAll('.slot');
+        let filled = false;
+        for (let s of slots) {
+          const idx = parseInt(s.dataset.slot);
+          if (!slotFills[idx]) {
+            slotFills[idx] = word;
+            s.textContent = word;
+            s.classList.add('filled');
+            this.classList.add('used');
+            filled = true;
+            break;
+          }
+        }
+      });
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (answered || gameComplete) return;
+      slotFills = {};
+      document.querySelectorAll('.slot').forEach(s => { s.textContent = '❓'; s.classList.remove('filled'); });
+      document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('used'));
+      document.getElementById('feedback').textContent = '';
+    });
+
+    document.getElementById('checkBtn').addEventListener('click', () => {
+      if (answered || gameComplete) return;
+      const allSlotsFilled = q.slots.every(s => slotFills[s.index] !== undefined);
+      if (!allSlotsFilled) {
+        document.getElementById('feedback').textContent = 'सर्वाणि रिक्तस्थानानि पूरयन्तु।';
+        return;
+      }
+      answered = true;
+      let correctCount = 0;
+      let fbText = '';
+      q.slots.forEach(s => {
+        if (slotFills[s.index] === s.correct) correctCount++;
+        else fbText += `स्थानम् ${s.index+1}: ${s.correct} `;
+      });
+      if (correctCount === q.slots.length) {
+        score += 10;
+        document.getElementById('feedback').textContent = '🎉 सर्वं सम्यक्! +10';
+      } else {
+        document.getElementById('feedback').textContent = `❌ ${correctCount}/${q.slots.length} साधु। सत्यम्: ${fbText}`;
+      }
+      document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+      document.getElementById('checkBtn').disabled = true;
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      document.querySelectorAll('.slot').forEach(s => {
+        const idx = parseInt(s.dataset.slot);
+        const slotData = q.slots.find(sl => sl.index === idx);
+        if (slotData && slotFills[idx] === slotData.correct) {
+          s.style.background = '#81c784';
+        } else if (slotData) {
+          s.style.background = '#ef9a9a';
+        }
+      });
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentIdx < questions.length - 1) {
+        currentIdx++;
+        slotFills = {};
+        answered = false;
+        renderQuestion();
+      } else {
+        gameComplete = true;
+        document.getElementById('feedback').innerHTML = `🎉 अभिनन्दनम्! Score: ${score}`;
+      }
+    });
+  }
+
+  function init() {
+    currentIdx = 0;
+    score = 0;
+    slotFills = {};
+    answered = false;
+    gameComplete = false;
+    renderQuestion();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
