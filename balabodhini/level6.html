@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 6 – धातु-रूपाणि · Verb Forms | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #fdf3dc;
+      --ink-brown: #4a2511;
+      --ink-maroon: #800000;
+      --gold: #c8960c;
+      --gold-light: #f0c040;
+      --gold-dark: #8b6914;
+      --saffron: #e86a17;
+      --cream: #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
+    }
+    .container {
+      max-width: 750px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+      z-index: 1;
+    }
+    .header-band { margin-bottom: 10px; }
+    .presenter {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 15px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .info-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 10px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .timer { font-size: 1.2em; font-weight: bold; color: var(--saffron); }
+    .score-display { font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+    .difficulty-select {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+    }
+    .diff-btn {
+      padding: 10px 20px; border: none; border-radius: 25px;
+      background: #f0deb4; color: var(--ink-brown);
+      font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .diff-btn.active {
+      background: var(--saffron); color: white;
+      box-shadow: 0 4px 10px rgba(232,106,23,0.4);
+    }
+    .question-card {
+      background: #fff3e0; border-radius: 20px;
+      padding: 25px; margin: 15px 0;
+      border: 3px solid var(--gold);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .vakya-display {
+      font-family: 'Laila', serif;
+      font-size: 1.8em; font-weight: 600;
+      color: var(--ink-brown);
+      background: #f9e4b7;
+      padding: 15px;
+      border-radius: 15px;
+      margin: 10px 0;
+    }
+    .options-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin: 15px 0;
+    }
+    .option-btn {
+      padding: 18px 20px; font-size: 1.3em;
+      border: 2px solid var(--gold);
+      border-radius: 15px;
+      background: #fff8e1;
+      color: var(--ink-brown);
+      font-family: 'Inknut Antiqua', serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .option-btn:hover { background: #ffe082; transform: scale(1.03); }
+    .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+    .option-btn.correct { background: #81c784; border-color: #2e7d32; }
+    .option-btn.wrong { background: #ef9a9a; border-color: #c62828; }
+    .controls { margin: 15px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px; transition: 0.2s; font-size: 1em;
+    }
+    .back-btn { background: var(--gold); color: white; }
+    .next-btn { background: #1565c0; color: white; font-size: 1.2em; }
+    .restart-btn { background: var(--ink-maroon); color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 15px; padding: 10px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+(function(){
+  // Complete verb database with 40 roots across 3 lakaras
+  const verbData = {
+    easy: {
+      name: 'लट् (वर्तमानकालः)',
+      questions: [
+        { kannada: 'ಅವನು ಹೋಗುತ್ತಾನೆ', correct: 'गच्छति', options: ['गच्छति','गच्छसि','गच्छामि','गच्छन्ति'] },
+        { kannada: 'ನಾನು ಹೋಗುತ್ತೇನೆ', correct: 'गच्छामि', options: ['गच्छामि','गच्छति','गच्छसि','गच्छथ'] },
+        { kannada: 'ನೀನು ಓದುತ್ತೀಯೆ', correct: 'पठसि', options: ['पठसि','पठति','पठामि','पठथ'] },
+        { kannada: 'ಅವನು ನೋಡುತ್ತಾನೆ', correct: 'पश्यति', options: ['पश्यति','पश्यसि','पश्यामि','पश्यन्ति'] },
+        { kannada: 'ನೀನು ಬರೆಯುತ್ತೀಯೆ', correct: 'लिखसि', options: ['लिखसि','लिखति','लिखामि','लिखथ'] },
+        { kannada: 'ಅವನು ಕೇಳುತ್ತಾನೆ', correct: 'शृणोति', options: ['शृणोति','शृणोषि','शृणोमि','शृण्वन्ति'] },
+        { kannada: 'ನಾನು ಮಾಡುತ್ತೇನೆ', correct: 'करोमि', options: ['करोमि','करोति','करोषि','कुर्वन्ति'] },
+        { kannada: 'ಅವನು ತಿನ್ನುತ್ತಾನೆ', correct: 'खादति', options: ['खादति','खादसि','खादामि','खादन्ति'] },
+        { kannada: 'ನೀನು ಕುಡಿಯುತ್ತೀಯೆ', correct: 'पिबसि', options: ['पिबसि','पिबति','पिबामि','पिबथ'] },
+        { kannada: 'ಅವನು ಬರುತ್ತಾನೆ', correct: 'आगच्छति', options: ['आगच्छति','आगच्छसि','आगच्छामि','आगच्छन्ति'] },
+        { kannada: 'ನಾನು ಕೂರುತ್ತೇನೆ', correct: 'उपविशामि', options: ['उपविशामि','उपविशति','उपविशसि','उपविशन्ति'] },
+        { kannada: 'ಅವನು ನಿಲ್ಲುತ್ತಾನೆ', correct: 'तिष्ठति', options: ['तिष्ठति','तिष्ठसि','तिष्ठामि','तिष्ठन्ति'] },
+        { kannada: 'ನೀನು ಹೇಳುತ್ತೀಯೆ', correct: 'वदसि', options: ['वदसि','वदति','वदामि','वदन्ति'] },
+        { kannada: 'ಅವನು ಓಡುತ್ತಾನೆ', correct: 'धावति', options: ['धावति','धावसि','धावामि','धावन्ति'] },
+        { kannada: 'ನಾನು ಆಡುತ್ತೇನೆ', correct: 'क्रीडामि', options: ['क्रीडामि','क्रीडति','क्रीडसि','क्रीडन्ति'] },
+        { kannada: 'ಅವನು ಕೊಡುತ್ತಾನೆ', correct: 'ददाति', options: ['ददाति','ददासि','ददामि','ददति'] },
+        { kannada: 'ನೀನು ನಗುತ್ತೀಯೆ', correct: 'हससि', options: ['हससि','हसति','हसामि','हसन्ति'] },
+        { kannada: 'ಅವನು ತಿಳಿಯುತ್ತಾನೆ', correct: 'जानाति', options: ['जानाति','जानासि','जानामि','जानन्ति'] },
+        { kannada: 'ನಾನು ಅಡುಗೆ ಮಾಡುತ್ತೇನೆ', correct: 'पचामि', options: ['पचामि','पचति','पचसि','पचन्ति'] },
+        { kannada: 'ಅವನು ಇದ್ದಾನೆ', correct: 'अस्ति', options: ['अस्ति','असि','अस्मि','सन्ति'] },
+        { kannada: 'ನೀನು ಕಲಿಯುತ್ತೀಯೆ', correct: 'शिक्षसे', options: ['शिक्षसे','शिक्षते','शिक्षे','शिक्षन्ते'] },
+        { kannada: 'ಅವನು ಪ್ರಶ್ನಿಸುತ್ತಾನೆ', correct: 'पृच्छति', options: ['पृच्छति','पृच्छसि','पृच्छामि','पृच्छन्ति'] },
+        { kannada: 'ನಾನು ತೆಗೆದುಕೊಳ್ಳುತ್ತೇನೆ', correct: 'गृह्णामि', options: ['गृह्णामि','गृह्णाति','गृह्णासि','गृह्णन्ति'] },
+        { kannada: 'ಅವನು ನಮಸ್ಕರಿಸುತ್ತಾನೆ', correct: 'नमति', options: ['नमति','नमसि','नमामि','नमन्ति'] },
+        { kannada: 'ನೀನು ಹಾಡುತ್ತೀಯೆ', correct: 'गायसि', options: ['गायसि','गायति','गायामि','गायन्ति'] },
+        { kannada: 'ಅವನು ಸ್ನಾನ ಮಾಡುತ್ತಾನೆ', correct: 'स्नाति', options: ['स्नाति','स्नासि','स्नामि','स्नान्ति'] },
+        { kannada: 'ನಾನು ನಡೆಯುತ್ತೇನೆ', correct: 'चलामि', options: ['चलामि','चलति','चलसि','चलन्ति'] },
+        { kannada: 'ಅವನು ಎದ್ದೇಳುತ್ತಾನೆ', correct: 'उत्तिष्ठति', options: ['उत्तिष्ठति','उत्तिष्ठसि','उत्तिष्ठामि','उत्तिष्ठन्ति'] },
+        { kannada: 'ನೀನು ಯೋಚಿಸುತ್ತೀಯೆ', correct: 'चिन्तयसि', options: ['चिन्तयसि','चिन्तयति','चिन्तयामि','चिन्तयन्ति'] },
+        { kannada: 'ಅವನು ನೆನಪಿಸಿಕೊಳ್ಳುತ್ತಾನೆ', correct: 'स्मरति', options: ['स्मरति','स्मरसि','स्मरामि','स्मरन्ति'] },
+        { kannada: 'ನಾನು ಖರೀದಿಸುತ್ತೇನೆ', correct: 'क्रीणामि', options: ['क्रीणामि','क्रीणाति','क्रीणासि','क्रीणन्ति'] },
+        { kannada: 'ಅವನು ಬಿಡುತ್ತಾನೆ', correct: 'त्यजति', options: ['त्यजति','त्यजसि','त्यजामि','त्यजन्ति'] },
+        { kannada: 'ನೀನು ಬೀಳುತ್ತೀಯೆ', correct: 'पतसि', options: ['पतसि','पतति','पतामि','पतन्ति'] },
+        { kannada: 'ಅವನು ಎಣಿಸುತ್ತಾನೆ', correct: 'गणयति', options: ['गणयति','गणयसि','गणयामि','गणयन्ति'] },
+        { kannada: 'ನಾನು ಆಗುತ್ತೇನೆ', correct: 'भवामि', options: ['भवामि','भवति','भवसि','भवन्ति'] },
+        { kannada: 'ಅವನು ರಕ್ಷಿಸುತ್ತಾನೆ', correct: 'रक्षति', options: ['रक्षति','रक्षसि','रक्षामि','रक्षन्ति'] },
+        { kannada: 'ನೀನು ಮಾರುತ್ತೀಯೆ', correct: 'विक्रीणासि', options: ['विक्रीणासि','विक्रीणाति','विक्रीणामि','विक्रीणन्ति'] },
+        { kannada: 'ಅವನು ಅಳುತ್ತಾನೆ', correct: 'रोदिति', options: ['रोदिति','रोदिषि','रोदिमि','रुदन्ति'] },
+        { kannada: 'ನಾನು ತೊಳೆಯುತ್ತೇನೆ', correct: 'प्रक्षालयामि', options: ['प्रक्षालयामि','प्रक्षालयति','प्रक्षालयसि','प्रक्षालयन्ति'] },
+        { kannada: 'ಅವನು ಭೇಟಿಯಾಗುತ್ತಾನೆ', correct: 'मिलति', options: ['मिलति','मिलसि','मिलामि','मिलन्ति'] },
+        { kannada: 'ನೀನು ಕರೆಯುತ್ತೀಯೆ', correct: 'आह्वयसि', options: ['आह्वयसि','आह्वयति','आह्वयामि','आह्वयन्ति'] },
+        { kannada: 'ಅವನು ಸ್ವೀಕರಿಸುತ್ತಾನೆ', correct: 'स्वीकरोति', options: ['स्वीकरोति','स्वीकरोषि','स्वीकरोमि','स्वीकुर्वन्ति'] },
+        { kannada: 'ನಾನು ನರ್ತಿಸುತ್ತೇನೆ', correct: 'नृत्यामि', options: ['नृत्यामि','नृत्यति','नृत्यसि','नृत्यन्ति'] },
+      ]
+    },
+    medium: {
+      name: 'लोट् (आज्ञार्थः)',
+      questions: [
+        { kannada: 'ನೀನು ಹೋಗು', correct: 'गच्छ', options: ['गच्छ','गच्छतु','गच्छानि','गच्छत'] },
+        { kannada: 'ನೀನು ಓದು', correct: 'पठ', options: ['पठ','पठतु','पठानि','पठत'] },
+        { kannada: 'ನೀನು ನೋಡು', correct: 'पश्य', options: ['पश्य','पश्यतु','पश्यानि','पश्यत'] },
+        { kannada: 'ನೀನು ಬರೆ', correct: 'लिख', options: ['लिख','लिखतु','लिखानि','लिखत'] },
+        { kannada: 'ನೀನು ಕೇಳು', correct: 'शृणु', options: ['शृणु','शृणोतु','शृणवानि','शृणुत'] },
+        { kannada: 'ನೀನು ಮಾಡು', correct: 'कुरु', options: ['कुरु','करोतु','करवानि','कुरुत'] },
+        { kannada: 'ನೀನು ತಿನ್ನು', correct: 'खाद', options: ['खाद','खादतु','खादानि','खादत'] },
+        { kannada: 'ನೀನು ಕುಡಿ', correct: 'पिब', options: ['पिब','पिबतु','पिबानि','पिबत'] },
+        { kannada: 'ನೀನು ಬಾ', correct: 'आगच्छ', options: ['आगच्छ','आगच्छतु','आगच्छानि','आगच्छत'] },
+        { kannada: 'ನೀನು ಕೂರು', correct: 'उपविश', options: ['उपविश','उपविशतु','उपविशानि','उपविशत'] },
+        { kannada: 'ನೀನು ನಿಲ್ಲು', correct: 'तिष्ठ', options: ['तिष्ठ','तिष्ठतु','तिष्ठानि','तिष्ठत'] },
+        { kannada: 'ನೀನು ಹೇಳು', correct: 'वद', options: ['वद','वदतु','वदानि','वदत'] },
+        { kannada: 'ನೀನು ಓಡು', correct: 'धाव', options: ['धाव','धावतु','धावानि','धावत'] },
+        { kannada: 'ನೀನು ಆಡು', correct: 'क्रीड', options: ['क्रीड','क्रीडतु','क्रीडानि','क्रीडत'] },
+        { kannada: 'ನೀನು ಕೊಡು', correct: 'देहि', options: ['देहि','ददातु','ददानि','दत्त'] },
+        { kannada: 'ನೀನು ನಗು', correct: 'हस', options: ['हस','हसतु','हसानि','हसत'] },
+        { kannada: 'ನೀನು ತಿಳಿ', correct: 'जानीहि', options: ['जानीहि','जानातु','जानानि','जानीत'] },
+        { kannada: 'ನೀನು ಅಡುಗೆ ಮಾಡು', correct: 'पच', options: ['पच','पचतु','पचानि','पचत'] },
+        { kannada: 'ನೀನು ಕಲಿ', correct: 'शिक्षस्व', options: ['शिक्षस्व','शिक्षताम्','शिक्षै','शिक्षध्वम्'] },
+        { kannada: 'ನೀನು ಪ್ರಶ್ನಿಸು', correct: 'पृच्छ', options: ['पृच्छ','पृच्छतु','पृच्छानि','पृच्छत'] },
+        { kannada: 'ನೀನು ತೆಗೆದುಕೊಳ್ಳು', correct: 'गृहाण', options: ['गृहाण','गृह्णातु','गृह्णानि','गृह्णीत'] },
+        { kannada: 'ನೀನು ನಮಸ್ಕರಿಸು', correct: 'नम', options: ['नम','नमतु','नमानि','नमत'] },
+        { kannada: 'ನೀನು ಹಾಡು', correct: 'गाय', options: ['गाय','गायतु','गायानि','गायत'] },
+        { kannada: 'ನೀನು ಸ್ನಾನ ಮಾಡು', correct: 'स्नाहि', options: ['स्नाहि','स्नातु','स्नानि','स्नात'] },
+        { kannada: 'ನೀನು ನಡೆ', correct: 'चल', options: ['चल','चलतु','चलानि','चलत'] },
+        { kannada: 'ನೀನು ಎದ್ದೇಳು', correct: 'उत्तिष्ठ', options: ['उत्तिष्ठ','उत्तिष्ठतु','उत्तिष्ठानि','उत्तिष्ठत'] },
+        { kannada: 'ನೀನು ಯೋಚಿಸು', correct: 'चिन्तय', options: ['चिन्तय','चिन्तयतु','चिन्तयानि','चिन्तयत'] },
+        { kannada: 'ನೀನು ನೆನಪಿಸಿಕೋ', correct: 'स्मर', options: ['स्मर','स्मरतु','स्मरानि','स्मरत'] },
+        { kannada: 'ನೀನು ಖರೀದಿಸು', correct: 'क्रीणीहि', options: ['क्रीणीहि','क्रीणातु','क्रीणानि','क्रीणीत'] },
+        { kannada: 'ನೀನು ಬಿಡು', correct: 'त्यज', options: ['त्यज','त्यजतु','त्यजानि','त्यजत'] },
+        { kannada: 'ನೀನು ಬೀಳು', correct: 'पत', options: ['पत','पततु','पतानि','पतत'] },
+        { kannada: 'ನೀನು ಎಣಿಸು', correct: 'गणय', options: ['गणय','गणयतु','गणयानि','गणयत'] },
+        { kannada: 'ನೀನು ಆಗು', correct: 'भव', options: ['भव','भवतु','भवानि','भवत'] },
+        { kannada: 'ನೀನು ರಕ್ಷಿಸು', correct: 'रक्ष', options: ['रक्ष','रक्षतु','रक्षानि','रक्षत'] },
+        { kannada: 'ನೀನು ಮಾರು', correct: 'विक्रीणीहि', options: ['विक्रीणीहि','विक्रीणातु','विक्रीणानि','विक्रीणीत'] },
+        { kannada: 'ನೀನು ಅಳು', correct: 'रुदिहि', options: ['रुदिहि','रोदितु','रोदानि','रुदित'] },
+        { kannada: 'ನೀನು ತೊಳೆ', correct: 'प्रक्षालय', options: ['प्रक्षालय','प्रक्षालयतु','प्रक्षालयानि','प्रक्षालयत'] },
+        { kannada: 'ನೀನು ಭೇಟಿಯಾಗು', correct: 'मिल', options: ['मिल','मिलतु','मिलानि','मिलत'] },
+        { kannada: 'ನೀನು ಕರೆ', correct: 'आह्वय', options: ['आह्वय','आह्वयतु','आह्वयानि','आह्वयत'] },
+        { kannada: 'ನೀನು ಸ್ವೀಕರಿಸು', correct: 'स्वीकुरु', options: ['स्वीकुरु','स्वीकरोतु','स्वीकरवानि','स्वीकुरुत'] },
+        { kannada: 'ನೀನು ನರ್ತಿಸು', correct: 'नृत्य', options: ['नृत्य','नृत्यतु','नृत्यानि','नृत्यत'] },
+      ]
+    },
+    hard: {
+      name: 'लङ् (भूतकालः)',
+      questions: [
+        { kannada: 'ಅವನು ಹೋದನು', correct: 'अगच्छत्', options: ['अगच्छत्','अगच्छः','अगच्छम्','अगच्छन्'] },
+        { kannada: 'ನೀನು ಓದಿದೆ', correct: 'अपठः', options: ['अपठः','अपठत्','अपठम्','अपठत'] },
+        { kannada: 'ನಾನು ನೋಡಿದೆನು', correct: 'अपश्यम्', options: ['अपश्यम्','अपश्यत्','अपश्यः','अपश्यन्'] },
+        { kannada: 'ಅವನು ಬರೆದನು', correct: 'अलिखत्', options: ['अलिखत्','अलिखः','अलिखम्','अलिखन्'] },
+        { kannada: 'ನೀನು ಕೇಳಿದೆ', correct: 'अशृणोः', options: ['अशृणोः','अशृणोत्','अशृणवम्','अशृण्वन्'] },
+        { kannada: 'ನಾನು ಮಾಡಿದೆನು', correct: 'अकरवम्', options: ['अकरवम्','अकरोत्','अकरोः','अकुर्वन्'] },
+        { kannada: 'ಅವನು ತಿಂದನು', correct: 'अखादत्', options: ['अखादत्','अखादः','अखादम्','अखादन्'] },
+        { kannada: 'ನೀನು ಕುಡಿದೆ', correct: 'अपिबः', options: ['अपिबः','अपिबत्','अपिबम्','अपिबन्'] },
+        { kannada: 'ನಾನು ಬಂದೆನು', correct: 'आगच्छम्', options: ['आगच्छम्','आगच्छत्','आगच्छः','आगच्छन्'] },
+        { kannada: 'ಅವನು ಕೂತನು', correct: 'उपाविशत्', options: ['उपाविशत्','उपाविशः','उपाविशम्','उपाविशन्'] },
+        { kannada: 'ನೀನು ನಿಂತೆ', correct: 'अतिष्ठः', options: ['अतिष्ठः','अतिष्ठत्','अतिष्ठम्','अतिष्ठन्'] },
+        { kannada: 'ನಾನು ಹೇಳಿದೆನು', correct: 'अवदम्', options: ['अवदम्','अवदत्','अवदः','अवदन्'] },
+        { kannada: 'ಅವನು ಓಡಿದನು', correct: 'अधावत्', options: ['अधावत्','अधावः','अधावम्','अधावन्'] },
+        { kannada: 'ನೀನು ಆಡಿದೆ', correct: 'अक्रीडः', options: ['अक्रीडः','अक्रीडत्','अक्रीडम्','अक्रीडन्'] },
+        { kannada: 'ನಾನು ಕೊಟ್ಟೆನು', correct: 'अददाम्', options: ['अददाम्','अददात्','अददाः','अददुः'] },
+        { kannada: 'ಅವನು ನಕ್ಕನು', correct: 'अहसत्', options: ['अहसत्','अहसः','अहसम्','अहसन्'] },
+        { kannada: 'ನೀನು ತಿಳಿದೆ', correct: 'अजानाः', options: ['अजानाः','अजानात्','अजानाम्','अजानन्'] },
+        { kannada: 'ನಾನು ಅಡುಗೆ ಮಾಡಿದೆನು', correct: 'अपचम्', options: ['अपचम्','अपचत्','अपचः','अपचन्'] },
+        { kannada: 'ಅವನು ಕಲಿತನು', correct: 'अशिक्षत', options: ['अशिक्षत','अशिक्षथाः','अशिक्षे','अशिक्षन्त'] },
+        { kannada: 'ನೀನು ಪ್ರಶ್ನಿಸಿದೆ', correct: 'अपृच्छः', options: ['अपृच्छः','अपृच्छत्','अपृच्छम्','अपृच्छन्'] },
+        { kannada: 'ನಾನು ತೆಗೆದುಕೊಂಡೆನು', correct: 'अगृह्णाम्', options: ['अगृह्णाम्','अगृह्णात्','अगृह्णाः','अगृह्णन्'] },
+        { kannada: 'ಅವನು ನಮಸ್ಕರಿಸಿದನು', correct: 'अनमत्', options: ['अनमत्','अनमः','अनमम्','अनमन्'] },
+        { kannada: 'ನೀನು ಹಾಡಿದೆ', correct: 'अगायः', options: ['अगायः','अगायत्','अगायम्','अगायन्'] },
+        { kannada: 'ನಾನು ಸ್ನಾನ ಮಾಡಿದೆನು', correct: 'अस्नासम्', options: ['अस्नासम्','अस्नात्','अस्नाः','अस्नान्'] },
+        { kannada: 'ಅವನು ನಡೆದನು', correct: 'अचलत्', options: ['अचलत्','अचलः','अचलम्','अचलन्'] },
+        { kannada: 'ನೀನು ಎದ್ದೆ', correct: 'उदतिष्ठः', options: ['उदतिष्ठः','उदतिष्ठत्','उदतिष्ठम्','उदतिष्ठन्'] },
+        { kannada: 'ನಾನು ಯೋಚಿಸಿದೆನು', correct: 'अचिन्तयम्', options: ['अचिन्तयम्','अचिन्तयत्','अचिन्तयः','अचिन्तयन्'] },
+        { kannada: 'ಅವನು ನೆನಪಿಸಿಕೊಂಡನು', correct: 'अस्मरत्', options: ['अस्मरत्','अस्मरः','अस्मरम्','अस्मरन्'] },
+        { kannada: 'ನೀನು ಖರೀದಿಸಿದೆ', correct: 'अक्रीणाः', options: ['अक्रीणाः','अक्रीणात्','अक्रीणाम्','अक्रीणन्'] },
+        { kannada: 'ನಾನು ಬಿಟ್ಟೆನು', correct: 'अत्यजम्', options: ['अत्यजम्','अत्यजत्','अत्यजः','अत्यजन्'] },
+        { kannada: 'ಅವನು ಬಿದ್ದನು', correct: 'अपतत्', options: ['अपतत्','अपतः','अपतम्','अपतन्'] },
+        { kannada: 'ನೀನು ಎಣಿಸಿದೆ', correct: 'अगणयः', options: ['अगणयः','अगणयत्','अगणयम्','अगणयन्'] },
+        { kannada: 'ನಾನು ಆದೆನು', correct: 'अभवम्', options: ['अभवम्','अभवत्','अभवः','अभवन्'] },
+        { kannada: 'ಅವನು ರಕ್ಷಿಸಿದನು', correct: 'अरक्षत्', options: ['अरक्षत्','अरक्षः','अरक्षम्','अरक्षन्'] },
+        { kannada: 'ನೀನು ಮಾರಿದೆ', correct: 'अविक्रीणाः', options: ['अविक्रीणाः','अविक्रीणात्','अविक्रीणाम्','अविक्रीणन्'] },
+        { kannada: 'ನಾನು ಅತ್ತೆನು', correct: 'अरोदम्', options: ['अरोदम्','अरोदत्','अरोदः','अरुदन्'] },
+        { kannada: 'ಅವನು ತೊಳೆದನು', correct: 'प्राक्षालयत्', options: ['प्राक्षालयत्','प्राक्षालयः','प्राक्षालयम्','प्राक्षालयन्'] },
+        { kannada: 'ನೀನು ಭೇಟಿಯಾದೆ', correct: 'अमिलः', options: ['अमिलः','अमिलत्','अमिलम्','अमिलन्'] },
+        { kannada: 'ನಾನು ಕರೆದೆನು', correct: 'आह्वयम्', options: ['आह्वयम्','आह्वयत्','आह्वयः','आह्वयन्'] },
+        { kannada: 'ಅವನು ಸ್ವೀಕರಿಸಿದನು', correct: 'स्व्यकरोत्', options: ['स्व्यकरोत्','स्व्यकरोः','स्व्यकरवम्','स्व्यकुर्वन्'] },
+        { kannada: 'ನೀನು ನರ್ತಿಸಿದೆ', correct: 'अनृत्यः', options: ['अनृत्यः','अनृत्यत्','अनृत्यम्','अनृत्यन्'] },
+      ]
+    }
+  };
+
+  let currentDifficulty = 'easy';
+  let currentQuestion = 0;
+  let questions = [];
+  let score = 0;
+  let timer = 120;
+  let timerInterval = null;
+  let answered = false;
+  let gameComplete = false;
+
+  const app = document.getElementById('app');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    return a;
+  }
+
+  function prepareQuestions(diff) {
+    return shuffle(verbData[diff].questions);
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timer = 120;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      timer--;
+      updateTimerDisplay();
+      if (timer <= 0) { clearInterval(timerInterval); endGame(false); }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const el = document.getElementById('timerDisplay');
+    if (el) { el.textContent = `⏱️ ${timer} से`; el.style.color = timer<=10?'#d32f2f':'#e86a17'; }
+  }
+
+  function endGame(won) {
+    gameComplete = true;
+    clearInterval(timerInterval);
+    const fb = document.getElementById('feedback');
+    if (fb) {
+      fb.innerHTML = won
+        ? `🎉 अभिनन्दनम्! Score: ${score}/${questions.length*10}`
+        : `⏰ कालवसानम्! Score: ${score}`;
+    }
+    const controls = document.querySelector('.controls');
+    if (controls) {
+      controls.innerHTML = `<button class="btn restart-btn" onclick="location.reload()">🔄 पुनः क्रीडामः</button>`;
+    }
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      answered = false;
+      renderQuestion();
+    } else {
+      endGame(true);
+    }
+  }
+
+  function renderQuestion() {
+    if (gameComplete) return;
+    const q = questions[currentQuestion];
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0;">
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+          <span style="font-family:'Inknut Antiqua',serif;font-size:24px;color:#e86a17;">ॐ</span>
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+        </div>
+        <div class="level-badge">Level 6 · धातु-रूपाणि (${verbData[currentDifficulty].name})</div>
+      </div>
+      <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+      <div class="info-bar">
+        <span class="timer" id="timerDisplay">⏱️ ${timer} से</span>
+        <span class="score-display" id="scoreDisplay">अङ्काः: ${score}</span>
+        <span>प्रश्न ${currentQuestion+1}/${questions.length}</span>
+      </div>
+      <div class="difficulty-select">
+        ${['easy','medium','hard'].map(d=>`
+          <button class="diff-btn ${d===currentDifficulty?'active':''}" data-diff="${d}">
+            ${d==='easy'?'🌸 लट्':d==='medium'?'📖 लोट्':'⚡ लङ्'}
+          </button>
+        `).join('')}
+      </div>
+      <div class="question-card">
+        <div class="vakya-display">${q.kannada}</div>
+        <div style="font-size:1.2em;color:var(--ink-maroon);margin-top:10px;">
+          संस्कृतेन किम्?
+        </div>
+      </div>
+      <div class="options-grid" id="optionsGrid">
+        ${q.options.map(opt=>`<button class="option-btn">${opt}</button>`).join('')}
+      </div>
+      <div class="controls" id="controlsArea">
+        <button class="btn next-btn" id="nextBtn" style="display:none;">⏩ अग्रिमः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    document.querySelectorAll('#optionsGrid .option-btn').forEach(b => {
+      b.addEventListener('click', function(e) {
+        if (answered || gameComplete) return;
+        const selected = e.target.textContent;
+        const correct = questions[currentQuestion].correct;
+        const allBtns = document.querySelectorAll('#optionsGrid .option-btn');
+        allBtns.forEach(btn => btn.disabled = true);
+        answered = true;
+
+        if (selected === correct) {
+          e.target.classList.add('correct');
+          score += 10;
+          document.getElementById('feedback').textContent = '✅ सम्यक्! +10';
+        } else {
+          e.target.classList.add('wrong');
+          score = Math.max(0, score - 2);
+          document.getElementById('feedback').textContent = `❌ उत्तरम्: ${correct} (-2)`;
+          allBtns.forEach(btn => {
+            if (btn.textContent === correct) btn.classList.add('correct');
+          });
+        }
+        document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+        document.getElementById('nextBtn').style.display = 'inline-block';
+      });
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+    document.querySelectorAll('.diff-btn').forEach(b => b.addEventListener('click', function(e) {
+      currentDifficulty = e.target.dataset.diff;
+      questions = prepareQuestions(currentDifficulty);
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      gameComplete = false;
+      clearInterval(timerInterval);
+      renderQuestion();
+      startTimer();
+    }));
+
+    updateTimerDisplay();
+  }
+
+  function init() {
+    questions = prepareQuestions(currentDifficulty);
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    gameComplete = false;
+    renderQuestion();
+    startTimer();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
