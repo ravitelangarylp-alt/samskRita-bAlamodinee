@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 5 – चित्र-शब्द-योजना · Picture-Word Match | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #fdf3dc;
+      --ink-brown: #4a2511;
+      --ink-maroon: #800000;
+      --gold: #c8960c;
+      --gold-light: #f0c040;
+      --gold-dark: #8b6914;
+      --saffron: #e86a17;
+      --cream: #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
+    }
+    .container {
+      max-width: 700px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+      z-index: 1;
+    }
+    .header-band { margin-bottom: 10px; }
+    .presenter {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 15px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .info-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 10px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .timer { font-size: 1.2em; font-weight: bold; color: var(--saffron); }
+    .score-display { font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+    .difficulty-select {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+    }
+    .diff-btn {
+      padding: 10px 20px; border: none; border-radius: 25px;
+      background: #f0deb4; color: var(--ink-brown);
+      font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .diff-btn.active {
+      background: var(--saffron); color: white;
+      box-shadow: 0 4px 10px rgba(232,106,23,0.4);
+    }
+    .picture-box {
+      background: #fff3e0; border-radius: 20px;
+      padding: 20px; margin: 15px 0;
+      border: 3px solid var(--gold);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5em;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .word-options {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin: 15px 0;
+    }
+    .word-btn {
+      padding: 15px 20px; font-size: 1.2em;
+      border: 2px solid var(--gold);
+      border-radius: 15px;
+      background: #fff8e1;
+      color: var(--ink-brown);
+      font-family: 'Inknut Antiqua', serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .word-btn:hover { background: #ffe082; transform: scale(1.03); }
+    .word-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+    .word-btn.correct-btn { background: #81c784; border-color: #2e7d32; color: #1b5e20; }
+    .word-btn.wrong-btn { background: #ef9a9a; border-color: #c62828; animation: shake 0.3s; }
+    @keyframes shake {
+      0%{transform:translateX(0);} 25%{transform:translateX(-5px);}
+      50%{transform:translateX(5px);} 75%{transform:translateX(-5px);}
+      100%{transform:translateX(0);}
+    }
+    .controls { margin: 15px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px; transition: 0.2s; font-size: 1em;
+    }
+    .back-btn { background: var(--gold); color: white; }
+    .next-btn { background: #1565c0; color: white; font-size: 1.2em; }
+    .restart-btn { background: var(--ink-maroon); color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 15px; padding: 10px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+(function(){
+  const data = {
+    easy: {
+      name: 'सरलः',
+      pairs: [
+        { emoji: '🍎', sanskrit: 'फलम्', options: ['फलम्','पुष्पम्','पत्रम्','जलम्'] },
+        { emoji: '📖', sanskrit: 'पुस्तकम्', options: ['पुस्तकम्','पत्रम्','चित्रम्','लेखनी'] },
+        { emoji: '🏠', sanskrit: 'गृहम्', options: ['गृहम्','विद्यालयः','देवालयः','आपणः'] },
+        { emoji: '🌳', sanskrit: 'वृक्षः', options: ['वृक्षः','पुष्पम्','फलम्','लता'] },
+        { emoji: '✏️', sanskrit: 'लेखनी', options: ['लेखनी','पुस्तकम्','चित्रम्','फलकम्'] },
+        { emoji: '⚽', sanskrit: 'कन्दुकः', options: ['कन्दुकः','चक्रम्','दण्डः','फलकम्'] },
+        { emoji: '🪑', sanskrit: 'पीठम्', options: ['पीठम्','फलकम्','मञ्चः','द्वारम्'] },
+        { emoji: '🕰️', sanskrit: 'घटिका', options: ['घटिका','सूर्यः','चन्द्रः','दीपः'] },
+        { emoji: '🌊', sanskrit: 'जलम्', options: ['जलम्','अग्निः','वायुः','भूमिः'] },
+        { emoji: '🌸', sanskrit: 'पुष्पम्', options: ['पुष्पम्','पत्रम्','फलम्','बीजम्'] },
+        { emoji: '☀️', sanskrit: 'सूर्यः', options: ['सूर्यः','चन्द्रः','अग्निः','नक्षत्रम्'] },
+        { emoji: '🌙', sanskrit: 'चन्द्रः', options: ['चन्द्रः','सूर्यः','नक्षत्रम्','ग्रहः'] },
+      ]
+    },
+    medium: {
+      name: 'मध्यमः',
+      pairs: [
+        { emoji: '🐘', sanskrit: 'गजः', options: ['गजः','सिंहः','अश्वः','गौः'] },
+        { emoji: '🦁', sanskrit: 'सिंहः', options: ['सिंहः','गजः','व्याघ्रः','श्वानः'] },
+        { emoji: '🐄', sanskrit: 'धेनुः', options: ['धेनुः','अश्वः','गजः','अजः'] },
+        { emoji: '🐒', sanskrit: 'वानरः', options: ['वानरः','मार्जारः','श्वानः','सिंहः'] },
+        { emoji: '🐍', sanskrit: 'सर्पः', options: ['सर्पः','मत्स्यः','कूर्मः','गोधा'] },
+        { emoji: '🦚', sanskrit: 'मयूरः', options: ['मयूरः','काकः','शुकः','हंसः'] },
+        { emoji: '🦅', sanskrit: 'गरुडः', options: ['गरुडः','हंसः','मयूरः','श्येनः'] },
+        { emoji: '🐟', sanskrit: 'मत्स्यः', options: ['मत्स्यः','कूर्मः','सर्पः','मण्डूकः'] },
+        { emoji: '🐢', sanskrit: 'कूर्मः', options: ['कूर्मः','मत्स्यः','सर्पः','नक्रः'] },
+        { emoji: '🐕', sanskrit: 'श्वानः', options: ['श्वानः','मार्जारः','वानरः','गजः'] },
+        { emoji: '🐈', sanskrit: 'मार्जारः', options: ['मार्जारः','श्वानः','वानरः','मूषकः'] },
+        { emoji: '🐎', sanskrit: 'अश्वः', options: ['अश्वः','गजः','धेनुः','गर्दभः'] },
+      ]
+    },
+    hard: {
+      name: 'कठिनः',
+      pairs: [
+        { emoji: '🕉️', sanskrit: 'ॐकारः', options: ['ॐकारः','स्वस्तिकः','त्रिशूलः','शङ्खः'] },
+        { emoji: '🪷', sanskrit: 'कमलम्', options: ['कमलम्','गुलाबः','चम्पकः','मालती'] },
+        { emoji: '🔱', sanskrit: 'त्रिशूलः', options: ['त्रिशूलः','शङ्खः','चक्रम्','गदा'] },
+        { emoji: '🐚', sanskrit: 'शङ्खः', options: ['शङ्खः','त्रिशूलः','चक्रम्','पद्मः'] },
+        { emoji: '🛕', sanskrit: 'देवालयः', options: ['देवालयः','गृहम्','विद्यालयः','सभागृहम्'] },
+        { emoji: '📿', sanskrit: 'जपमाला', options: ['जपमाला','कङ्कणम्','हारः','कुण्डलम्'] },
+        { emoji: '🔔', sanskrit: 'घण्टा', options: ['घण्टा','शङ्खः','भेरी','मृदङ्गः'] },
+        { emoji: '🪔', sanskrit: 'दीपः', options: ['दीपः','अग्निः','सूर्यः','ज्योतिः'] },
+        { emoji: '🏹', sanskrit: 'धनुः', options: ['धनुः','खड्गः','गदा','शूलः'] },
+        { emoji: '⚔️', sanskrit: 'खड्गः', options: ['खड्गः','धनुः','गदा','भल्लः'] },
+        { emoji: '🛞', sanskrit: 'चक्रम्', options: ['चक्रम्','शङ्खः','गदा','पद्मः'] },
+        { emoji: '🏔️', sanskrit: 'पर्वतः', options: ['पर्वतः','नदी','सागरः','वनम्'] },
+      ]
+    }
+  };
+
+  let currentDifficulty = 'easy';
+  let currentQuestion = 0;
+  let questions = [];
+  let score = 0;
+  let timer = 60;
+  let timerInterval = null;
+  let answered = false;
+  let gameComplete = false;
+
+  const app = document.getElementById('app');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    return a;
+  }
+
+  function prepareQuestions(diff) {
+    let pairs = data[diff].pairs;
+    let qs = pairs.map(p => ({
+      emoji: p.emoji,
+      correct: p.sanskrit,
+      options: shuffle(p.options)
+    }));
+    return shuffle(qs);
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timer = 60;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      timer--;
+      updateTimerDisplay();
+      if (timer <= 0) { clearInterval(timerInterval); endGame(false); }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const el = document.getElementById('timerDisplay');
+    if (el) { el.textContent = `⏱️ ${timer} से`; el.style.color = timer<=10?'#d32f2f':'#e86a17'; }
+  }
+
+  function endGame(won) {
+    gameComplete = true;
+    clearInterval(timerInterval);
+    const fb = document.getElementById('feedback');
+    if (fb) {
+      fb.innerHTML = won
+        ? '🎉 अभिनन्दनम्! सर्वे प्रश्नाः समाप्ताः!'
+        : `⏰ कालवसानम्! Score: ${score}`;
+    }
+    // Show restart button
+    const controls = document.querySelector('.controls');
+    if (controls) {
+      controls.innerHTML = `<button class="btn restart-btn" onclick="location.reload()">🔄 पुनः क्रीडामः</button>`;
+    }
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      answered = false;
+      renderQuestion();
+    } else {
+      endGame(true);
+    }
+  }
+
+  function renderQuestion() {
+    if (gameComplete) return;
+    const q = questions[currentQuestion];
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0;">
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+          <span style="font-family:'Inknut Antiqua',serif;font-size:24px;color:#e86a17;">ॐ</span>
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+        </div>
+        <div class="level-badge">Level 5 · चित्र-शब्द-योजना</div>
+      </div>
+      <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+      <div class="info-bar">
+        <span class="timer" id="timerDisplay">⏱️ ${timer} से</span>
+        <span class="score-display" id="scoreDisplay">अङ्काः: ${score}</span>
+        <span>प्रश्न ${currentQuestion+1}/${questions.length}</span>
+      </div>
+      <div class="difficulty-select">
+        ${['easy','medium','hard'].map(d=>`
+          <button class="diff-btn ${d===currentDifficulty?'active':''}" data-diff="${d}">
+            ${d==='easy'?'🌸 सरल':d==='medium'?'📖 मध्यम':'⚡ कठिन'}
+          </button>
+        `).join('')}
+      </div>
+      <div class="picture-box">${q.emoji}</div>
+      <div style="font-family:'Inknut Antiqua',serif;font-size:1.3em;color:var(--ink-maroon);margin-bottom:10px;">
+        अस्य चित्रस्य नाम किम्?
+      </div>
+      <div class="word-options" id="wordOptions">
+        ${q.options.map(opt=>`<button class="word-btn">${opt}</button>`).join('')}
+      </div>
+      <div class="controls" id="controlsArea">
+        <button class="btn next-btn" id="nextBtn" style="display:none;">⏩ अग्रिमः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    // Attach word button handlers
+    document.querySelectorAll('#wordOptions .word-btn').forEach(b => {
+      b.addEventListener('click', function(e) {
+        if (answered || gameComplete) return;
+        const selected = e.target.textContent;
+        const correct = questions[currentQuestion].correct;
+        const allBtns = document.querySelectorAll('#wordOptions .word-btn');
+        allBtns.forEach(btn => btn.disabled = true);
+        answered = true;
+
+        if (selected === correct) {
+          e.target.classList.add('correct-btn');
+          score += 10;
+          document.getElementById('feedback').textContent = '✅ सम्यक्! +10';
+        } else {
+          e.target.classList.add('wrong-btn');
+          score = Math.max(0, score - 2);
+          document.getElementById('feedback').textContent = `❌ उत्तरम्: ${correct} (-2)`;
+          allBtns.forEach(btn => {
+            if (btn.textContent === correct) btn.classList.add('correct-btn');
+          });
+        }
+        document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+        // Show next button
+        document.getElementById('nextBtn').style.display = 'inline-block';
+      });
+    });
+
+    // Next button handler
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+    // Difficulty buttons
+    document.querySelectorAll('.diff-btn').forEach(b => b.addEventListener('click', function(e) {
+      currentDifficulty = e.target.dataset.diff;
+      questions = prepareQuestions(currentDifficulty);
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      gameComplete = false;
+      clearInterval(timerInterval);
+      renderQuestion();
+      startTimer();
+    }));
+
+    updateTimerDisplay();
+  }
+
+  function init() {
+    questions = prepareQuestions(currentDifficulty);
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    gameComplete = false;
+    renderQuestion();
+    startTimer();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
