@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Level 8 – शब्द-रूपाणि · Noun Forms | Samskrita Balabodhini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600;700;800&family=Laila:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --parchment: #fdf3dc;
+      --ink-brown: #4a2511;
+      --ink-maroon: #800000;
+      --gold: #c8960c;
+      --gold-light: #f0c040;
+      --gold-dark: #8b6914;
+      --saffron: #e86a17;
+      --cream: #fffbf0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background-color: var(--parchment);
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(200,150,12,0.06) 29px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(74,37,17,0.03) 41px);
+      font-family: 'Laila', serif;
+      color: var(--ink-brown);
+      display: flex; justify-content: center; align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 10px;
+      border: 3px double var(--gold); border-radius: 6px;
+      pointer-events: none; z-index: 200;
+    }
+    body::after {
+      content: '';
+      position: fixed; inset: 16px;
+      border: 1px solid rgba(200,150,12,0.4); border-radius: 4px;
+      pointer-events: none; z-index: 200;
+    }
+    .container {
+      max-width: 750px; width: 100%;
+      background: var(--cream);
+      border-radius: 30px;
+      padding: 25px;
+      box-shadow: 0 20px 40px rgba(74,37,17,0.2);
+      text-align: center;
+      position: relative;
+      border: 3px double var(--gold);
+      z-index: 1;
+    }
+    .header-band { margin-bottom: 10px; }
+    .presenter {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.15em; color: var(--gold-dark); text-transform: uppercase;
+    }
+    .level-badge {
+      background: var(--ink-maroon); color: var(--gold-light);
+      display: inline-block; padding: 6px 28px; border-radius: 100px;
+      font-family: 'Inknut Antiqua', serif; font-size: 15px; font-weight: 600;
+      letter-spacing: 0.05em; margin: 10px 0 15px;
+      box-shadow: 0 4px 12px rgba(128,0,0,0.3);
+    }
+    .info-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 10px 0; flex-wrap: wrap; gap: 10px;
+    }
+    .timer { font-size: 1.2em; font-weight: bold; color: var(--saffron); }
+    .score-display { font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+    .difficulty-select {
+      display: flex; gap: 10px; justify-content: center; margin-bottom: 15px;
+    }
+    .diff-btn {
+      padding: 10px 20px; border: none; border-radius: 25px;
+      background: #f0deb4; color: var(--ink-brown);
+      font-weight: bold; cursor: pointer; transition: 0.2s;
+    }
+    .diff-btn.active {
+      background: var(--saffron); color: white;
+      box-shadow: 0 4px 10px rgba(232,106,23,0.4);
+    }
+    .question-card {
+      background: #fff3e0; border-radius: 20px;
+      padding: 25px; margin: 15px 0;
+      border: 3px solid var(--gold);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .picture-display {
+      font-size: 5em;
+      animation: float 3s ease-in-out infinite;
+      margin: 10px 0;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .vakya-display {
+      font-family: 'Laila', serif;
+      font-size: 1.8em; font-weight: 600;
+      color: var(--ink-brown);
+      background: #f9e4b7;
+      padding: 15px;
+      border-radius: 15px;
+      margin: 10px 0;
+    }
+    .mula-shabda {
+      display: inline-block;
+      font-family: 'Inknut Antiqua', serif;
+      font-size: 2em; font-weight: 800;
+      color: var(--ink-maroon);
+      background: linear-gradient(135deg, #ffe082, #ffcc80);
+      padding: 10px 30px;
+      border-radius: 20px;
+      margin: 10px 0;
+      border: 2px solid var(--gold);
+      box-shadow: 0 3px 10px rgba(200,150,12,0.3);
+    }
+    .options-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin: 15px 0;
+    }
+    .option-btn {
+      padding: 18px 20px; font-size: 1.3em;
+      border: 2px solid var(--gold);
+      border-radius: 15px;
+      background: #fff8e1;
+      color: var(--ink-brown);
+      font-family: 'Inknut Antiqua', serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .option-btn:hover { background: #ffe082; transform: scale(1.03); }
+    .option-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+    .option-btn.correct { background: #81c784; border-color: #2e7d32; }
+    .option-btn.wrong { background: #ef9a9a; border-color: #c62828; }
+    .controls { margin: 15px 0; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: 10px 20px; border: none; border-radius: 30px; cursor: pointer;
+      font-weight: bold; margin: 5px; transition: 0.2s; font-size: 1em;
+    }
+    .back-btn { background: var(--gold); color: white; }
+    .next-btn { background: #1565c0; color: white; font-size: 1.2em; }
+    .restart-btn { background: var(--ink-maroon); color: white; }
+    .btn:hover { transform: translateY(-2px); }
+    .feedback { font-size: 1.2em; margin: 10px 0; min-height: 30px; }
+    .mantra {
+      background: var(--ink-maroon); color: var(--gold-light);
+      margin-top: 15px; padding: 10px; border-radius: 10px;
+      font-family: 'Inknut Antiqua', serif; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="app"></div>
+<script>
+(function(){
+  const nounData = {
+    easy: {
+      name: 'चित्र-द्विवचन (Picture → Dual)',
+      questions: [
+        { kannada: '👦👦 (ಇಬ್ಬರು)', mula: 'राम', correct: 'रामौ', options: ['रामः','रामौ','रामाः','रामम्'] },
+        { kannada: '👦👦 (ಇಬ್ಬರು)', mula: 'बालक', correct: 'बालकौ', options: ['बालकः','बालकौ','बालकाः','बालकम्'] },
+        { kannada: '👑👑 (ಇಬ್ಬರು)', mula: 'नृप', correct: 'नृपौ', options: ['नृपः','नृपौ','नृपाः','नृपम्'] },
+        { kannada: '🌿🌿 (ಎರಡು)', mula: 'लता', correct: 'लते', options: ['लता','लते','लताः','लताम्'] },
+        { kannada: '👧👧 (ಇಬ್ಬರು)', mula: 'बालिका', correct: 'बालिके', options: ['बालिका','बालिके','बालिकाः','बालिकाम्'] },
+        { kannada: '👩👩 (ಇಬ್ಬರು)', mula: 'सीता', correct: 'सीते', options: ['सीता','सीते','सीताः','सीताम्'] },
+        { kannada: '🍎🍎 (ಎರಡು)', mula: 'फल', correct: 'फले', options: ['फलम्','फले','फलानि','फलेन'] },
+        { kannada: '🌳🌳 (ಎರಡು)', mula: 'वन', correct: 'वने', options: ['वनम्','वने','वनानि','वनेन'] },
+        { kannada: '📖📖 (ಎರಡು)', mula: 'पुस्तक', correct: 'पुस्तके', options: ['पुस्तकम्','पुस्तके','पुस्तकानि','पुस्तकेन'] },
+        { kannada: '🟡🟡 (ಇಬ್ಬರು)', mula: 'हरि', correct: 'हरी', options: ['हरिः','हरी','हरयः','हरिम्'] },
+        { kannada: '✍️✍️ (ಇಬ್ಬರು)', mula: 'कवि', correct: 'कवी', options: ['कविः','कवी','कवयः','कविम्'] },
+        { kannada: '📿📿 (ಎರಡು)', mula: 'मति', correct: 'मती', options: ['मतिः','मती','मतयः','मतिम्'] },
+        { kannada: '🏞️🏞️ (ಎರಡು)', mula: 'नदी', correct: 'नद्यौ', options: ['नदी','नद्यौ','नद्यः','नदीम्'] },
+        { kannada: '👩‍👧👩‍👧 (ಇಬ್ಬರು)', mula: 'जननी', correct: 'जनन्यौ', options: ['जननी','जनन्यौ','जनन्यः','जननीम्'] },
+        { kannada: '💧💧 (ಎರಡು)', mula: 'वारि', correct: 'वारिणी', options: ['वारि','वारिणी','वारीणि','वारिणा'] },
+        { kannada: '👨‍🏫👨‍🏫 (ಇಬ್ಬರು)', mula: 'गुरु', correct: 'गुरू', options: ['गुरुः','गुरू','गुरवः','गुरुम्'] },
+        { kannada: '☀️☀️ (ಇಬ್ಬರು)', mula: 'भानु', correct: 'भानू', options: ['भानुः','भानू','भानवः','भानुम्'] },
+        { kannada: '🐄🐄 (ಎರಡು)', mula: 'धेनु', correct: 'धेनू', options: ['धेनुः','धेनू','धेनवः','धेनुम्'] },
+        { kannada: '🍯🍯 (ಎರಡು)', mula: 'मधु', correct: 'मधुनी', options: ['मधु','मधुनी','मधूनि','मधुना'] },
+        { kannada: '👨👨 (ಇಬ್ಬರು)', mula: 'पितृ', correct: 'पितरौ', options: ['पिता','पितरौ','पितरः','पितरम्'] },
+        { kannada: '👨‍🔧👨‍🔧 (ಇಬ್ಬರು)', mula: 'धातृ', correct: 'धातारौ', options: ['धाता','धातारौ','धातारः','धातारम्'] },
+        { kannada: '👩👩 (ಇಬ್ಬರು)', mula: 'मातृ', correct: 'मातरौ', options: ['माता','मातरौ','मातरः','मातरम्'] },
+      ]
+    },
+    medium: {
+      name: 'कन्नड → एकवचन/बहुवचन',
+      questions: [
+        { kannada: 'ರಾಮನು (ಏಕವಚನ)', mula: 'राम', correct: 'रामः', options: ['रामौ','रामः','रामाः','रामम्'] },
+        { kannada: 'ಬಾಲಕರು (ಬಹುವಚನ)', mula: 'बालक', correct: 'बालकाः', options: ['बालकः','बालकौ','बालकाः','बालकान्'] },
+        { kannada: 'ರಾಜನು (ಏಕವಚನ)', mula: 'नृप', correct: 'नृपः', options: ['नृपौ','नृपः','नृपाः','नृपम्'] },
+        { kannada: 'ಬಳ್ಳಿಗಳು (ಬಹುವಚನ)', mula: 'लता', correct: 'लताः', options: ['लता','लते','लताः','लताम्'] },
+        { kannada: 'ಬಾಲಕಿಯರು (ಬಹುವಚನ)', mula: 'बालिका', correct: 'बालिकाः', options: ['बालिका','बालिके','बालिकाः','बालिकाम्'] },
+        { kannada: 'ಸೀತೆಯು (ಏಕವಚನ)', mula: 'सीता', correct: 'सीता', options: ['सीते','सीता','सीताः','सीताम्'] },
+        { kannada: 'ಹಣ್ಣುಗಳು (ಬಹುವಚನ)', mula: 'फल', correct: 'फलानि', options: ['फलम्','फले','फलानि','फलान्'] },
+        { kannada: 'ವನಗಳು (ಬಹುವಚನ)', mula: 'वन', correct: 'वनानि', options: ['वनम्','वने','वनानि','वनान्'] },
+        { kannada: 'ಪುಸ್ತಕಗಳು (ಬಹುವಚನ)', mula: 'पुस्तक', correct: 'पुस्तकानि', options: ['पुस्तकम्','पुस्तके','पुस्तकानि','पुस्तकान्'] },
+        { kannada: 'ಹರಿಯು (ಏಕವಚನ)', mula: 'हरि', correct: 'हरिः', options: ['हरी','हरिः','हरयः','हरिम्'] },
+        { kannada: 'ಕವಿಗಳು (ಬಹುವಚನ)', mula: 'कवि', correct: 'कवयः', options: ['कविः','कवी','कवयः','कवीन्'] },
+        { kannada: 'ಮತಿಗಳು (ಬಹುವಚನ)', mula: 'मति', correct: 'मतयः', options: ['मतिः','मती','मतयः','मतीः'] },
+        { kannada: 'ನದಿಯು (ಏಕವಚನ)', mula: 'नदी', correct: 'नदी', options: ['नद्यौ','नदी','नद्यः','नदीम्'] },
+        { kannada: 'ತಾಯಂದಿರು (ಬಹುವಚನ)', mula: 'जननी', correct: 'जनन्यः', options: ['जननी','जनन्यौ','जनन्यः','जननीः'] },
+        { kannada: 'ನೀರುಗಳು (ಬಹುವಚನ)', mula: 'वारि', correct: 'वारीणि', options: ['वारि','वारिणी','वारीणि','वारीः'] },
+        { kannada: 'ಗುರುಗಳು (ಬಹುವಚನ)', mula: 'गुरु', correct: 'गुरवः', options: ['गुरुः','गुरू','गुरवः','गुरून्'] },
+        { kannada: 'ಸೂರ್ಯನು (ಏಕವಚನ)', mula: 'भानु', correct: 'भानुः', options: ['भानू','भानुः','भानवः','भानुम्'] },
+        { kannada: 'ಹಸುಗಳು (ಬಹುವಚನ)', mula: 'धेनु', correct: 'धेनवः', options: ['धेनुः','धेनू','धेनवः','धेनूः'] },
+        { kannada: 'ಜೇನುಗಳು (ಬಹುವಚನ)', mula: 'मधु', correct: 'मधूनि', options: ['मधु','मधुनी','मधूनि','मधून्'] },
+        { kannada: 'ತಂದೆಯರು (ಬಹುವಚನ)', mula: 'पितृ', correct: 'पितरः', options: ['पिता','पितरौ','पितरः','पितॄन्'] },
+        { kannada: 'ಧಾತೃಗಳು (ಬಹುವಚನ)', mula: 'धातृ', correct: 'धातारः', options: ['धाता','धातारौ','धातारः','धातॄन्'] },
+        { kannada: 'ಮಾತೆಯರು (ಬಹುವಚನ)', mula: 'मातृ', correct: 'मातरः', options: ['माता','मातरौ','मातरः','मातॄः'] },
+      ]
+    },
+    hard: {
+      name: 'वाक्य-रिक्तस्थान (Sentence Fill)',
+      questions: [
+        { kannada: '______ (ರಾಮನು) ಫಲವನ್ನು ಖಾದತಿ।', mula: 'राम', correct: 'रामः', options: ['रामौ','रामः','रामाः','रामेण'] },
+        { kannada: '______ (ಇಬ್ಬರು ಬಾಲಕರು) ಕ್ರೀಡತಃ।', mula: 'बालक', correct: 'बालकौ', options: ['बालकः','बालकौ','बालकाः','बालकैः'] },
+        { kannada: '______ (ರಾಜರು) ಪ್ರಜಾಃ ಪಾಲಯನ್ತಿ।', mula: 'नृप', correct: 'नृपाः', options: ['नृपः','नृपौ','नृपाः','नृपैः'] },
+        { kannada: '______ (ಬಳ್ಳಿಯು) ವರ್ಧತೇ।', mula: 'लता', correct: 'लता', options: ['लते','लता','लताः','लतया'] },
+        { kannada: '______ (ಇಬ್ಬರು ಬಾಲಕಿಯರು) ಪಠತಃ।', mula: 'बालिका', correct: 'बालिके', options: ['बालिका','बालिके','बालिकाः','बालिकाभ्याम्'] },
+        { kannada: '______ (ಸೀತೆಯರು) ಗಾಯನ್ತಿ।', mula: 'सीता', correct: 'सीताः', options: ['सीता','सीते','सीताः','सीताभिः'] },
+        { kannada: '______ (ಹಣ್ಣು) ಮಧುರಮ್ ಅಸ್ತಿ।', mula: 'फल', correct: 'फलम्', options: ['फले','फलम्','फलानि','फलेन'] },
+        { kannada: '______ (ಎರಡು ವನಗಳು) ಸುನ್ದರೇ ಸ್ತಃ।', mula: 'वन', correct: 'वने', options: ['वनम्','वने','वनानि','वनाभ्याम्'] },
+        { kannada: '______ (ಪುಸ್ತಕಗಳು) ಜ್ಞಾನಂ ಯಚ್ಛನ್ತಿ।', mula: 'पुस्तक', correct: 'पुस्तकानि', options: ['पुस्तकम्','पुस्तके','पुस्तकानि','पुस्तकैः'] },
+        { kannada: '______ (ಹರಿಯು) ಭಕ್ತಾನ್ ರಕ್ಷತಿ।', mula: 'हरि', correct: 'हरिः', options: ['हरी','हरिः','हरयः','हरिणा'] },
+        { kannada: '______ (ಕವಿಗಳು) ಕಾವ್ಯಾನಿ ರಚಯನ್ತಿ।', mula: 'कवि', correct: 'कवयः', options: ['कविः','कवी','कवयः','कविभिः'] },
+        { kannada: '______ (ನದಿಯು) ಪ್ರವಹತಿ।', mula: 'नदी', correct: 'नदी', options: ['नद्यौ','नदी','नद्यः','नद्या'] },
+        { kannada: '______ (ತಾಯಂದಿರು) ಸ್ನೇಹಂ ದದತಿ।', mula: 'जननी', correct: 'जनन्यः', options: ['जननी','जनन्यौ','जनन्यः','जननीभिः'] },
+        { kannada: '______ (ಗುರುಗಳು) ಶಿಷ್ಯಾನ್ ಪಾಠಯನ್ತಿ।', mula: 'गुरु', correct: 'गुरवः', options: ['गुरुः','गुरू','गुरवः','गुरुभिः'] },
+        { kannada: '______ (ಸೂರ್ಯನು) ಪ್ರಕಾಶತೇ।', mula: 'भानु', correct: 'भानुः', options: ['भानू','भानुः','भानवः','भानुना'] },
+        { kannada: '______ (ತಂದೆಯರು) ಪುತ್ರಾನ್ ಪಾಲಯನ್ತಿ।', mula: 'पितृ', correct: 'पितरः', options: ['पिता','पितरौ','पितरः','पितृभिः'] },
+        { kannada: '______ (ಮಾತೆಯರು) ಸ್ನೇಹೇನ ಪಾಲಯನ್ತಿ।', mula: 'मातृ', correct: 'मातरः', options: ['माता','मातरौ','मातरः','मातृभिः'] },
+      ]
+    }
+  };
+
+  let currentDifficulty = 'easy';
+  let currentQuestion = 0;
+  let questions = [];
+  let score = 0;
+  let timer = 90;
+  let timerInterval = null;
+  let answered = false;
+  let gameComplete = false;
+
+  const app = document.getElementById('app');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+    return a;
+  }
+
+  function prepareQuestions(diff) {
+    return shuffle(nounData[diff].questions);
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timer = 90;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+      timer--;
+      updateTimerDisplay();
+      if (timer <= 0) { clearInterval(timerInterval); endGame(false); }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    const el = document.getElementById('timerDisplay');
+    if (el) { el.textContent = `⏱️ ${timer} से`; el.style.color = timer<=10?'#d32f2f':'#e86a17'; }
+  }
+
+  function endGame(won) {
+    gameComplete = true;
+    clearInterval(timerInterval);
+    const fb = document.getElementById('feedback');
+    if (fb) {
+      fb.innerHTML = won
+        ? `🎉 अभिनन्दनम्! Score: ${score}/${questions.length*10}`
+        : `⏰ कालवसानम्! Score: ${score}`;
+    }
+    const controls = document.querySelector('.controls');
+    if (controls) {
+      controls.innerHTML = `<button class="btn restart-btn" onclick="location.reload()">🔄 पुनः क्रीडामः</button>`;
+    }
+  }
+
+  function nextQuestion() {
+    if (currentQuestion < questions.length - 1) {
+      currentQuestion++;
+      answered = false;
+      renderQuestion();
+    } else {
+      endGame(true);
+    }
+  }
+
+  function renderQuestion() {
+    if (gameComplete) return;
+    const q = questions[currentQuestion];
+    const isEasy = currentDifficulty === 'easy';
+    const shuffledOptions = shuffle([...q.options]);
+
+    const html = `
+      <div class="header-band">
+        <p class="presenter">Team Trayee — तृयी — Presents</p>
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin:10px 0;">
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+          <span style="font-family:'Inknut Antiqua',serif;font-size:24px;color:#e86a17;">ॐ</span>
+          <div style="flex:1;max-width:100px;height:1px;background:linear-gradient(to right,transparent,#c8960c,transparent);"></div>
+        </div>
+        <div class="level-badge">Level 8 · शब्द-रूपाणि (${nounData[currentDifficulty].name})</div>
+      </div>
+      <button class="btn back-btn" onclick="window.location.href='./index.html'">🗺️ मुख्य-नक्षा</button>
+      <div class="info-bar">
+        <span class="timer" id="timerDisplay">⏱️ ${timer} से</span>
+        <span class="score-display" id="scoreDisplay">अङ्काः: ${score}</span>
+        <span>प्रश्न ${currentQuestion+1}/${questions.length}</span>
+      </div>
+      <div class="difficulty-select">
+        ${['easy','medium','hard'].map(d=>`
+          <button class="diff-btn ${d===currentDifficulty?'active':''}" data-diff="${d}">
+            ${d==='easy'?'🖼️ चित्र':d==='medium'?'📖 कन्नड':'⚡ वाक्य'}
+          </button>
+        `).join('')}
+      </div>
+      <div class="question-card">
+        ${isEasy ? `
+          <div class="picture-display">${q.kannada.split(' ')[0]}</div>
+          <div class="mula-shabda">${q.mula}</div>
+          <div style="font-size:1.3em;color:var(--ink-maroon);margin-top:10px;">${q.kannada.substring(q.kannada.indexOf('('))}</div>
+        ` : `
+          <div class="vakya-display">${q.kannada}</div>
+          <div class="mula-shabda">मूलशब्दः · ${q.mula}</div>
+        `}
+        <div style="font-size:1.2em;color:var(--ink-maroon);margin-top:10px;">
+          संस्कृतेन किम्?
+        </div>
+      </div>
+      <div class="options-grid" id="optionsGrid">
+        ${shuffledOptions.map(opt=>`<button class="option-btn">${opt}</button>`).join('')}
+      </div>
+      <div class="controls" id="controlsArea">
+        <button class="btn next-btn" id="nextBtn" style="display:none;">⏩ अग्रिमः</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+      <div class="mantra">तद्धि तपस्तद्धि तपः</div>
+    `;
+    app.innerHTML = html;
+
+    document.querySelectorAll('#optionsGrid .option-btn').forEach(b => {
+      b.addEventListener('click', function(e) {
+        if (answered || gameComplete) return;
+        const selected = e.target.textContent;
+        const correct = questions[currentQuestion].correct;
+        const allBtns = document.querySelectorAll('#optionsGrid .option-btn');
+        allBtns.forEach(btn => btn.disabled = true);
+        answered = true;
+
+        if (selected === correct) {
+          e.target.classList.add('correct');
+          score += 10;
+          document.getElementById('feedback').textContent = '✅ सम्यक्! +10';
+        } else {
+          e.target.classList.add('wrong');
+          score = Math.max(0, score - 2);
+          document.getElementById('feedback').textContent = `❌ उत्तरम्: ${correct} (-2)`;
+          allBtns.forEach(btn => {
+            if (btn.textContent === correct) btn.classList.add('correct');
+          });
+        }
+        document.getElementById('scoreDisplay').textContent = `अङ्काः: ${score}`;
+        document.getElementById('nextBtn').style.display = 'inline-block';
+      });
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+
+    document.querySelectorAll('.diff-btn').forEach(b => b.addEventListener('click', function(e) {
+      currentDifficulty = e.target.dataset.diff;
+      questions = prepareQuestions(currentDifficulty);
+      currentQuestion = 0;
+      score = 0;
+      answered = false;
+      gameComplete = false;
+      clearInterval(timerInterval);
+      renderQuestion();
+      startTimer();
+    }));
+
+    updateTimerDisplay();
+  }
+
+  function init() {
+    questions = prepareQuestions(currentDifficulty);
+    currentQuestion = 0;
+    score = 0;
+    answered = false;
+    gameComplete = false;
+    renderQuestion();
+    startTimer();
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>
